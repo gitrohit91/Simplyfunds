@@ -1,0 +1,91 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 1. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // 2. Reusable Primitives
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isSignedIn() {
+      return request.auth != null && request.auth.token.email_verified == true;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // 3. Entity Validation Blueprints
+    function isValidLead(data) {
+      let requiredFields = ['name', 'phone', 'loanType', 'loanAmount', 'ownerId', 'createdAt', 'status'];
+      return data.keys().hasAll(requiredFields) 
+        && data.keys().size() == requiredFields.size()
+        && data.name is string && data.name.size() > 0 && data.name.size() <= 100
+        && data.phone is string && data.phone.size() >= 10 && data.phone.size() <= 15
+        && data.loanType in ['home', 'personal', 'business', 'lap', 'car', 'gold']
+        && data.loanAmount is number && data.loanAmount > 0
+        && data.ownerId == request.auth.uid
+        && data.status == 'received';
+    }
+
+    function isValidAdvisorLog(data) {
+      return data.keys().hasAll(['userId', 'query', 'response', 'createdAt'])
+        && data.keys().size() == 4
+        && data.userId == request.auth.uid
+        && data.query is string && data.query.size() <= 1000
+        && data.response is string && data.response.size() <= 5000;
+    }
+
+    // 4. Collection Match Blocks
+    
+    // LEADS COLLECTION
+    match /leads/{leadId} {
+      allow create: if isSignedIn() 
+        && isValidId(leadId) 
+        && isValidLead(incoming()) 
+        && incoming().createdAt == request.time;
+      
+      allow get: if isOwner(existing().ownerId);
+      
+      allow list: if isSignedIn() 
+        && resource.data.ownerId == request.auth.uid;
+      
+      allow update: if isOwner(existing().ownerId)
+        && incoming().ownerId == existing().ownerId
+        && (
+          // Action: User can cancel lead or update contact info
+          (incoming().diff(existing()).affectedKeys().hasOnly(['name', 'phone', 'status'])
+          && incoming().status in ['received', 'cancelled'])
+        );
+      
+      allow delete: if false; // Prefer soft-delete via status
+    }
+
+    // ADVISOR LOGS COLLECTION
+    match /advisor_logs/{logId} {
+      allow create: if isSignedIn() 
+        && isValidId(logId) 
+        && isValidAdvisorLog(incoming())
+        && incoming().createdAt == request.time;
+      
+      allow get: if isOwner(existing().userId);
+      
+      allow list: if isSignedIn() 
+        && resource.data.userId == request.auth.uid;
+      
+      allow update, delete: if false;
+    }
+  }
+}
