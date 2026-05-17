@@ -785,12 +785,7 @@ export default function App() {
         </div>
       </footer>
 
-      {/* Floating Action Buttons */}
-      <div className="fixed bottom-6 left-6 z-40 hidden md:flex flex-col gap-3">
-        <Button className="w-12 h-12 rounded-full bg-emerald-500 hover:bg-emerald-600 shadow-lg p-0">
-          <Phone className="w-6 h-6" />
-        </Button>
-      </div>
+
     </div>
   );
 }
