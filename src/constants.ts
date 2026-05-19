@@ -109,7 +109,7 @@ export const PARTNERS = [
     alias: 'CANARA',
     color: 'bg-blue-500',
     description: 'A leading commercial bank with a strong domestic and international presence, focused on sustainable banking.',
-    offerings: ['Canara Home', 'Quick Education Loans', 'MSME Support'],
+    offerings: ['Canara Home', 'MSME Support', 'Star Agri Loans'],
     logoText: 'CANARA'
   }
 ];

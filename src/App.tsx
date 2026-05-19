@@ -48,6 +48,7 @@ import EligibilityCalculator from './components/EligibilityCalculator';
 import LeadForm from './components/LeadForm';
 import Logo from './components/Logo';
 import PrivacyPolicy from './components/PrivacyPolicy';
+import TermsOfService from './components/TermsOfService';
 import { LOAN_TYPES, TRUST_MARKERS, PARTNERS, TESTIMONIALS, SPECIALIZATIONS } from './constants';
 import { getLoanAdvice } from './services/geminiService';
 import { 
@@ -689,14 +690,14 @@ export default function App() {
                       <ul className="text-sm space-y-2 text-slate-600">
                         <li className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-emerald-500" /> Identity Proof (PAN)</li>
                         <li className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-emerald-500" /> Address Proof</li>
-                        <li className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-emerald-500" /> 3 Months Pay Slips</li>
-                        <li className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-emerald-500" /> 6 Months Bank Stmt</li>
+                        <li className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-emerald-500" /> 6 Months Payslips</li>
+                        <li className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-emerald-500" /> Salary Acc Statement</li>
                       </ul>
                     </div>
                     <div className="space-y-3">
                       <h6 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Self-Employed</h6>
                       <ul className="text-sm space-y-2 text-slate-600">
-                        <li className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-emerald-500" /> Business Reg Proof</li>
+                        <li className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-emerald-500" /> Business Reg Proof (Trade License, GST Reg if applicable, PTax, or Udyam)</li>
                         <li className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-emerald-500" /> Last 2 Years ITR</li>
                         <li className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-emerald-500" /> 12 Months Bank Stmt</li>
                         <li className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-emerald-500" /> GST Registration</li>
@@ -837,7 +838,7 @@ export default function App() {
                 <a href="#" className="hover:text-white transition-colors">Home Loans</a>
                 <a href="#" className="hover:text-white transition-colors">Personal Loans</a>
                 <a href="#" className="hover:text-white transition-colors">Business Loans</a>
-                <a href="#" className="hover:text-white transition-colors">Education Loans</a>
+                <a href="#" className="hover:text-white transition-colors">MSME Loan (Mudra)</a>
                 <a href="#" className="hover:text-white transition-colors">Vehicle Loans</a>
               </div>
             </div>
@@ -897,7 +898,7 @@ export default function App() {
             <p>© 2026 SimplyFunds Financial Services. All rights reserved.</p>
             <div className="flex gap-8">
               <PrivacyPolicy />
-              <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+              <TermsOfService />
               <a href="#" className="hover:text-white transition-colors">Disclaimer</a>
             </div>
           </div>
