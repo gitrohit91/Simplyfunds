@@ -47,6 +47,7 @@ import EMICalculator from './components/EMICalculator';
 import EligibilityCalculator from './components/EligibilityCalculator';
 import LeadForm from './components/LeadForm';
 import Logo from './components/Logo';
+import PrivacyPolicy from './components/PrivacyPolicy';
 import { LOAN_TYPES, TRUST_MARKERS, PARTNERS, TESTIMONIALS, SPECIALIZATIONS } from './constants';
 import { getLoanAdvice } from './services/geminiService';
 import { 
@@ -153,32 +154,6 @@ export default function App() {
             <a href="#emi-calculator" className="hover:text-blue-600 transition-colors">Calculators</a>
             <a href="#document-checklist" className="hover:text-blue-600 transition-colors">Documents</a>
             
-            {user ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger render={<Button variant="ghost" className="relative h-10 w-10 rounded-full p-0 border border-slate-200" />}>
-                  <img src={user.photoURL || ''} alt={user.displayName || ''} className="h-full w-full rounded-full object-cover" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56" align="end" forceMount>
-                  <DropdownMenuLabel className="font-normal border-l-4 border-amber-500 pl-4">
-                    <div className="flex flex-col space-y-1">
-                      <p className="text-sm font-medium leading-none">{user.displayName}</p>
-                      <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
-                    </div>
-                  </DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem className="cursor-pointer focus:bg-amber-50">
-                    <UserIcon className="mr-2 h-4 w-4 text-amber-500" /> My Applications
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleLogout} className="text-red-600 cursor-pointer focus:bg-red-50">
-                    <LogOut className="mr-2 h-4 w-4" /> Log out
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-              <Button onClick={handleLogin} variant="outline" className="border-amber-500 text-amber-600 hover:bg-amber-50">Login</Button>
-            )}
-            
             <LeadForm user={user} />
           </div>
 
@@ -207,20 +182,6 @@ export default function App() {
                 <a href="#document-checklist" className="text-lg font-medium py-2 border-b border-slate-50" onClick={() => setIsMenuOpen(false)}>Documents</a>
                 
                 <div className="pt-4 flex flex-col gap-4">
-                  {user ? (
-                    <div className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl border-l-4 border-amber-500">
-                      <img src={user.photoURL || ''} alt={user.displayName || ''} className="w-12 h-12 rounded-full" />
-                      <div className="flex-1">
-                        <p className="font-bold">{user.displayName}</p>
-                        <p className="text-xs text-slate-500">{user.email}</p>
-                      </div>
-                      <Button variant="ghost" size="icon" onClick={handleLogout} className="text-red-600">
-                        <LogOut className="w-5 h-5" />
-                      </Button>
-                    </div>
-                  ) : (
-                    <Button onClick={handleLogin} className="w-full bg-gradient-to-r from-blue-600 to-amber-500 border-none h-12 rounded-xl text-white font-bold">Login with Google</Button>
-                  )}
                   <LeadForm user={user} />
                 </div>
               </div>
@@ -935,7 +896,7 @@ export default function App() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-xs">
             <p>© 2026 SimplyFunds Financial Services. All rights reserved.</p>
             <div className="flex gap-8">
-              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+              <PrivacyPolicy />
               <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
               <a href="#" className="hover:text-white transition-colors">Disclaimer</a>
             </div>

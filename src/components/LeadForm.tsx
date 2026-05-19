@@ -132,7 +132,7 @@ export default function LeadForm({ user }: LeadFormProps) {
             </div>
             <div className="flex flex-col gap-3">
               <Button variant="outline" className="w-full border-blue-600 text-blue-600 h-12 rounded-xl" onClick={() => setIsOpen(false)}>
-                Close & Log In from Menu
+                Close
               </Button>
               <a href="mailto:support@simplyfunds.in?subject=Loan Inquiry" className="w-full">
                 <Button variant="ghost" className="w-full text-slate-400 hover:text-blue-600 text-xs">
