@@ -611,23 +611,28 @@ export default function App() {
                 amount: "₹44,88,000", 
                 type: "Star Home Loan (Takeover + Topup)", 
                 bank: "Bank of India", 
-                image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&q=80&w=800",
+                bankShort: "BOI",
                 date: "Sanctioned on April 20, 2026",
-                isActualSanction: true
+                isActualSanction: true,
+                tags: ["HOME LOAN", "TOP UP"]
               },
               { 
                 amount: "₹45,00,000", 
-                type: "Home Loan", 
-                bank: "SBI", 
-                image: "https://images.unsplash.com/photo-1554469384-e58fac16e23a?auto=format&fit=crop&q=80&w=800",
-                date: "Sanctioned on May 15, 2026"
+                type: "Housing Loan", 
+                bank: "State Bank of India", 
+                bankShort: "SBI",
+                date: "Sanctioned on May 15, 2026",
+                isActualSanction: true,
+                tags: ["HOME LOAN", "NEW PURCHASE"]
               },
               { 
                 amount: "₹12,00,000", 
                 type: "Personal Loan", 
                 bank: "Bank of Baroda", 
-                image: "https://images.unsplash.com/photo-1634733988138-bfbc5b6cd974?auto=format&fit=crop&q=80&w=800",
-                date: "Sanctioned on May 12, 2026"
+                bankShort: "BOB",
+                date: "Sanctioned on May 12, 2026",
+                isActualSanction: true,
+                tags: ["PERSONAL", "UNSECURED"]
               }
             ].map((sanction, i) => (
               <motion.div
@@ -637,60 +642,43 @@ export default function App() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
               >
-                <Card className={`h-full border-none shadow-lg overflow-hidden group ${sanction.isActualSanction ? 'ring-2 ring-emerald-500/20' : ''}`}>
-                  <div className="relative h-64 overflow-hidden bg-white">
-                    {sanction.isActualSanction ? (
-                      <div className="absolute inset-0 p-6 flex flex-col items-center justify-center text-center space-y-4">
-                        <div className="w-16 h-16 rounded bg-blue-50 flex items-center justify-center text-blue-700 font-bold border border-blue-100 shadow-inner">
-                          BOI
-                        </div>
-                        <div className="space-y-1">
-                          <p className="text-[10px] uppercase font-bold text-slate-400 tracking-widest">Official Sanction</p>
-                          <h5 className="font-extrabold text-slate-900 border-b-2 border-emerald-500 pb-1">Ref: {sanction.amount}</h5>
-                        </div>
-                        <div className="flex gap-2">
-                          <div className="bg-emerald-50 px-2 py-1 rounded text-[8px] font-bold text-emerald-700 border border-emerald-100">HOME LOAN</div>
-                          <div className="bg-blue-50 px-2 py-1 rounded text-[8px] font-bold text-blue-700 border border-blue-100">TOP UP</div>
-                        </div>
-                        <div className="absolute top-2 right-2 -rotate-12 opacity-80">
-                          <div className="border-4 border-emerald-600 text-emerald-600 font-black px-2 py-0.5 rounded text-xs uppercase tracking-tighter">SANCTIONED</div>
-                        </div>
+                <Card className="h-full border-none shadow-lg overflow-hidden group ring-1 ring-slate-200">
+                  <div className="relative h-64 overflow-hidden bg-[#fafafa] border-b border-slate-100">
+                    {/* Official Document Visual */}
+                    <div className="absolute inset-0 p-6 flex flex-col items-center justify-center text-center space-y-4">
+                      <div className="w-16 h-16 rounded bg-white flex items-center justify-center text-blue-800 font-black border border-slate-200 shadow-sm text-lg">
+                        {sanction.bankShort}
                       </div>
-                    ) : (
-                      <img 
-                        src={sanction.image} 
-                        alt="Sanction Letter" 
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
-                    )}
-                    
-                    <div className="absolute inset-0 bg-black/5 group-hover:bg-black/20 transition-colors pointer-events-none"></div>
-                    
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                      <div className="bg-white/90 backdrop-blur px-4 py-2 rounded-full font-bold text-slate-900 border border-white shadow-xl flex items-center gap-2">
-                        <FileText className="w-4 h-4 text-blue-600" />
-                        View Document
+                      <div className="space-y-1">
+                        <p className="text-[9px] uppercase font-bold text-slate-400 tracking-[0.2em]">Official Sanction Letter</p>
+                        <h5 className="font-extrabold text-slate-900 border-b-2 border-emerald-500 pb-1">Ref: {sanction.amount}</h5>
+                      </div>
+                      <div className="flex gap-2">
+                        {sanction.tags?.map(tag => (
+                          <div key={tag} className="bg-slate-100 px-2 py-1 rounded text-[8px] font-bold text-slate-600 border border-slate-200">{tag}</div>
+                        ))}
+                      </div>
+                      <div className="absolute top-4 right-4 -rotate-12">
+                        <div className="border-4 border-emerald-600/30 text-emerald-600/50 font-black px-2 py-0.5 rounded text-[10px] uppercase tracking-tighter">APPROVED</div>
                       </div>
                     </div>
                     
-                    {!sanction.isActualSanction && (
-                      <Badge className="absolute top-4 left-4 bg-emerald-500 text-white border-none font-bold shadow-lg">
-                        {sanction.amount}
-                      </Badge>
-                    )}
+                    {/* Subtle Paper Texture Overlay */}
+                    <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/paper-fibers.png')]"></div>
                   </div>
                   <CardContent className="p-6">
                     <div className="flex justify-between items-start mb-2">
                       <div>
-                        <h4 className="font-extrabold text-slate-900 text-xl">{sanction.type}</h4>
-                        <p className="text-sm font-medium text-blue-600 uppercase tracking-wider">{sanction.bank}</p>
+                        <h4 className="font-extrabold text-slate-900 text-lg leading-tight">{sanction.type}</h4>
+                        <p className="text-sm font-medium text-blue-600 tracking-wide mt-1">{sanction.bank}</p>
                       </div>
-                      <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600">
-                        {sanction.isActualSanction ? <ShieldCheck className="w-5 h-5 text-emerald-600" /> : <ShieldCheck className="w-5 h-5" />}
+                      <div className="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0">
+                        <ShieldCheck className="w-5 h-5" />
                       </div>
                     </div>
-                    <Separator className="my-4 opacity-50" />
-                    <p className="text-xs text-slate-400 font-medium italic">
+                    <Separator className="my-4 opacity-30" />
+                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest flex items-center gap-2">
+                      <FileText className="w-3 h-3" />
                       {sanction.date}
                     </p>
                   </CardContent>
