@@ -603,6 +603,13 @@ export default function App() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               { 
+                amount: "₹44,88,000", 
+                type: "Home Loan (Takeover + Topup)", 
+                bank: "Bank of India", 
+                image: "https://images.unsplash.com/photo-1586769852836-bc069f19e1b6?auto=format&fit=crop&q=80&w=800",
+                date: "Sanctioned on April 20, 2026"
+              },
+              { 
                 amount: "₹45,00,000", 
                 type: "Home Loan", 
                 bank: "SBI", 
@@ -613,15 +620,8 @@ export default function App() {
                 amount: "₹12,00,000", 
                 type: "Personal Loan", 
                 bank: "Bank of Baroda", 
-                image: "https://images.unsplash.com/photo-1586769852836-bc069f19e1b6?auto=format&fit=crop&q=80&w=800",
+                image: "https://images.unsplash.com/photo-1634733988138-bfbc5b6cd974?auto=format&fit=crop&q=80&w=800",
                 date: "Sanctioned on May 12, 2026"
-              },
-              { 
-                amount: "₹25,00,000", 
-                type: "Business Loan", 
-                bank: "Union Bank", 
-                image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=800",
-                date: "Sanctioned on May 10, 2026"
               }
             ].map((sanction, i) => (
               <motion.div
