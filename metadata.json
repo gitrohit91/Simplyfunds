@@ -1,6 +1,6 @@
 {
-  "name": "SimplyFunds Loan DSA",
-  "description": "Professional Loan Direct Selling Agent platform with EMI calculators, eligibility checks, and secure lead management.",
+  "name": "Simplyfunds.in",
+  "description": "Simplyfunds.in - Professional Loan Direct Selling Agent platform with EMI calculators, eligibility checks, and secure lead management.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

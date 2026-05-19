@@ -45,7 +45,7 @@ import EMICalculator from './components/EMICalculator';
 import EligibilityCalculator from './components/EligibilityCalculator';
 import LeadForm from './components/LeadForm';
 import Logo from './components/Logo';
-import { LOAN_TYPES, TRUST_MARKERS, PARTNERS, TESTIMONIALS } from './constants';
+import { LOAN_TYPES, TRUST_MARKERS, PARTNERS, TESTIMONIALS, SPECIALIZATIONS } from './constants';
 import { getLoanAdvice } from './services/geminiService';
 import { 
   auth, 
@@ -248,7 +248,7 @@ export default function App() {
                 <span className="bg-gradient-to-r from-blue-600 via-fuchsia-500 to-amber-500 bg-clip-text text-transparent">Faster</span> Approvals.
               </h1>
               <p className="text-lg text-slate-600 max-w-lg leading-relaxed">
-                Connect with 30+ leading banks and NBFCs through SimplyFunds. Home, Personal, or Business - we find the lowest rates for you.
+                Connect with leading banks and NBFCs through SimplyFunds. Home, Personal, or Business - we find the lowest rates for you.
               </p>
             </div>
 
@@ -343,6 +343,126 @@ export default function App() {
         </div>
       </section>
 
+      {/* Debt Consolidation & Specialization Section */}
+      <section className="py-20 bg-gradient-to-br from-slate-50 to-blue-50">
+        <div className="container mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-5xl mx-auto bg-white rounded-[2rem] shadow-xl shadow-blue-100/50 overflow-hidden border border-blue-100"
+          >
+            <div className="grid md:grid-cols-5 divide-y md:divide-y-0 md:divide-x divide-blue-50">
+              <div className="md:col-span-3 p-10 md:p-12 space-y-6">
+                <div className="space-y-2">
+                  <Badge className="bg-blue-100 text-blue-700 border-none px-3 py-1 text-[10px] font-bold uppercase tracking-wider">Our Specialization</Badge>
+                  <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">{SPECIALIZATIONS.balanceTransfer.title}</h2>
+                </div>
+                <p className="text-slate-600 text-lg leading-relaxed">
+                  {SPECIALIZATIONS.balanceTransfer.description}
+                </p>
+                <div className="flex items-center gap-4 pt-2">
+                  <div className="flex flex-col">
+                    <span className="text-3xl font-black text-blue-600">100%</span>
+                    <span className="text-[10px] uppercase font-bold text-slate-400 tracking-widest text-center">Managed</span>
+                  </div>
+                  <div className="w-px h-10 bg-slate-100"></div>
+                  <div className="flex flex-col">
+                    <span className="text-3xl font-black text-amber-500">Fast</span>
+                    <span className="text-[10px] uppercase font-bold text-slate-400 tracking-widest text-center">Process</span>
+                  </div>
+                </div>
+              </div>
+              <div className="md:col-span-2 p-10 md:p-12 bg-slate-50/50 flex flex-col justify-center gap-6">
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <div className="w-6 h-6 rounded-full bg-red-100 flex items-center justify-center shrink-0 mt-0.5">
+                      <X className="w-3.5 h-3.5 text-red-600" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-slate-800">Policy Notice</p>
+                      <p className="text-xs text-slate-500 mt-1">{SPECIALIZATIONS.balanceTransfer.policy}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-6 h-6 rounded-full bg-amber-100 flex items-center justify-center shrink-0 mt-0.5">
+                      <ShieldCheck className="w-3.5 h-3.5 text-amber-600" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-slate-800">Exception Rule</p>
+                      <p className="text-xs text-slate-500 mt-1">{SPECIALIZATIONS.balanceTransfer.exception}</p>
+                    </div>
+                  </div>
+                </div>
+                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white h-12 rounded-xl font-bold font-sans">
+                  Consolidate Now
+                </Button>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Calculators Section */}
+      <section id="emi-calculator" className="py-24 bg-slate-900 text-white overflow-hidden relative">
+        <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none">
+          <div className="grid grid-cols-12 h-full">
+            {Array.from({length: 12}).map((_, i) => (
+              <div key={i} className="border-r border-white h-full"></div>
+            ))}
+          </div>
+        </div>
+
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="grid lg:grid-cols-12 gap-16 items-center">
+            <div className="lg:col-span-4 space-y-8">
+              <div className="space-y-4">
+                <Badge className="bg-emerald-500/20 text-emerald-400 border-none uppercase tracking-widest text-[10px] py-1 px-3">Power Tools</Badge>
+                <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight">Plan Your Finances Better</h2>
+                <p className="text-slate-400 leading-relaxed text-lg">
+                  Use our advanced calculators to understand your monthly commitments and eligibility before you apply.
+                </p>
+              </div>
+
+              <div className="space-y-6">
+                {[
+                  { t: 'EMI Calculator', d: 'Predict your monthly outflows' },
+                  { t: 'Eligibility Tool', d: 'Based on income and existing obligations' },
+                  { t: 'Prepayment Tool', d: 'See how much and when you can save' }
+                ].map((item, i) => (
+                  <div key={i} className="flex gap-4 items-start">
+                    <div className="w-6 h-6 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-500 flex-shrink-0 mt-1">
+                      <Plus className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h5 className="font-bold text-white uppercase text-xs tracking-wider">{item.t}</h5>
+                      <p className="text-slate-400 text-sm mt-1">{item.d}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="lg:col-span-8">
+              <Tabs defaultValue="emi" className="w-full">
+                <div className="flex justify-center mb-6">
+                  <TabsList className="bg-white/10 p-1 border border-white/20">
+                    <TabsTrigger value="emi" className="data-[state=active]:bg-blue-500 data-[state=active]:text-white">EMI Calculator</TabsTrigger>
+                    <TabsTrigger value="eligibility" className="data-[state=active]:bg-amber-500 data-[state=active]:text-white">Eligibility Tool</TabsTrigger>
+                  </TabsList>
+                </div>
+                <TabsContent value="emi">
+                  <EMICalculator />
+                </TabsContent>
+                <TabsContent value="eligibility">
+                  <EligibilityCalculator />
+                </TabsContent>
+              </Tabs>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Partners Section */}
       <section id="partners" className="py-24 bg-white border-y border-slate-100 scroll-mt-20">
         <div className="container mx-auto px-6">
@@ -397,7 +517,7 @@ export default function App() {
           <div className="mt-16 p-8 bg-blue-50 rounded-3xl flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
             <div className="space-y-2">
               <h4 className="text-xl font-bold text-blue-900">Looking for a specific lender?</h4>
-              <p className="text-blue-700 text-sm">We are an authorized DSA for over 30+ major financial institutions across India.</p>
+              <p className="text-blue-700 text-sm">We are an authorized DSA for major financial institutions across India.</p>
             </div>
             <LeadForm user={user} />
           </div>
@@ -471,96 +591,76 @@ export default function App() {
         </div>
       </section>
 
-      {/* Calculators Section */}
-      <section id="emi-calculator" className="py-24 bg-slate-900 text-white overflow-hidden relative">
-        <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none">
-          <div className="grid grid-cols-12 h-full">
-            {Array.from({length: 12}).map((_, i) => (
-              <div key={i} className="border-r border-white h-full"></div>
-            ))}
-          </div>
-        </div>
-
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="grid lg:grid-cols-12 gap-16 items-center">
-            <div className="lg:col-span-4 space-y-8">
-              <div className="space-y-4">
-                <Badge className="bg-emerald-500/20 text-emerald-400 border-none uppercase tracking-widest text-[10px] py-1 px-3">Power Tools</Badge>
-                <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight">Plan Your Finances Better</h2>
-                <p className="text-slate-400 leading-relaxed text-lg">
-                  Use our advanced calculators to understand your monthly commitments and eligibility before you apply.
-                </p>
-              </div>
-
-              <div className="space-y-6">
-                {[
-                  { t: 'EMI Calculator', d: 'Predict your monthly outflows' },
-                  { t: 'Eligibility Tool', d: 'Based on income and existing obligations' },
-                  { t: 'Prepayment Tool', d: 'See how much and when you can save' }
-                ].map((item, i) => (
-                  <div key={i} className="flex gap-4 items-start">
-                    <div className="w-6 h-6 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-500 flex-shrink-0 mt-1">
-                      <Plus className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <h5 className="font-bold text-white uppercase text-xs tracking-wider">{item.t}</h5>
-                      <p className="text-slate-400 text-sm mt-1">{item.d}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="lg:col-span-8">
-              <Tabs defaultValue="emi" className="w-full">
-                <div className="flex justify-center mb-6">
-                  <TabsList className="bg-white/10 p-1 border border-white/20">
-                    <TabsTrigger value="emi" className="data-[state=active]:bg-blue-500 data-[state=active]:text-white">EMI Calculator</TabsTrigger>
-                    <TabsTrigger value="eligibility" className="data-[state=active]:bg-amber-500 data-[state=active]:text-white">Eligibility Tool</TabsTrigger>
-                  </TabsList>
-                </div>
-                <TabsContent value="emi">
-                  <EMICalculator />
-                </TabsContent>
-                <TabsContent value="eligibility">
-                  <EligibilityCalculator />
-                </TabsContent>
-              </Tabs>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
+      {/* Latest Sanctions Section */}
       <section className="py-24 bg-slate-50">
         <div className="container mx-auto px-6">
           <div className="text-center space-y-4 mb-16">
-            <Badge className="bg-fuchsia-100 text-fuchsia-600 hover:bg-fuchsia-100 border-none uppercase tracking-widest text-[10px] py-1 px-3">Success Stories</Badge>
-            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight">What Our Customers Say</h2>
-            <p className="text-slate-500 max-w-2xl mx-auto">Real experiences from people who realized their dreams with SimplyFunds.</p>
+            <Badge className="bg-emerald-100 text-emerald-600 hover:bg-emerald-100 border-none uppercase tracking-widest text-[10px] py-1 px-3">Recent Success</Badge>
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight">Latest Sanctioned Loans</h2>
+            <p className="text-slate-500 max-w-2xl mx-auto">We take pride in turning applications into approvals. Here are some of our most recent success stories.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {TESTIMONIALS.map((testimonial, i) => (
+            {[
+              { 
+                amount: "₹45,00,000", 
+                type: "Home Loan", 
+                bank: "SBI", 
+                image: "https://images.unsplash.com/photo-1554469384-e58fac16e23a?auto=format&fit=crop&q=80&w=800",
+                date: "Sanctioned on May 15, 2026"
+              },
+              { 
+                amount: "₹12,00,000", 
+                type: "Personal Loan", 
+                bank: "Bank of Baroda", 
+                image: "https://images.unsplash.com/photo-1586769852836-bc069f19e1b6?auto=format&fit=crop&q=80&w=800",
+                date: "Sanctioned on May 12, 2026"
+              },
+              { 
+                amount: "₹25,00,000", 
+                type: "Business Loan", 
+                bank: "Union Bank", 
+                image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=800",
+                date: "Sanctioned on May 10, 2026"
+              }
+            ].map((sanction, i) => (
               <motion.div
-                key={testimonial.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                key={i}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
               >
-                <Card className="h-full border-none shadow-sm hover:shadow-md transition-shadow duration-300">
-                  <CardContent className="pt-8 space-y-6">
-                    <p className="text-slate-600 italic leading-relaxed text-lg">
-                      "{testimonial.content}"
-                    </p>
-                    <div className="flex items-center gap-6 pt-4 border-t border-slate-50">
-                      <img src={testimonial.avatar} alt={testimonial.name} className="w-20 h-20 rounded-full object-cover shadow-md border-2 border-white ring-4 ring-slate-50" />
-                      <div>
-                        <h4 className="font-bold text-slate-900 text-lg">{testimonial.name}</h4>
-                        <p className="text-sm text-slate-500 font-medium">{testimonial.role}</p>
+                <Card className="h-full border-none shadow-lg overflow-hidden group">
+                  <div className="relative h-64 overflow-hidden">
+                    <img 
+                      src={sanction.image} 
+                      alt="Sanction Letter" 
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="bg-white/90 backdrop-blur px-4 py-2 rounded-full font-bold text-slate-900 border border-white">
+                        Official Sanction
                       </div>
                     </div>
+                    <Badge className="absolute top-4 left-4 bg-emerald-500 text-white border-none font-bold">
+                      {sanction.amount}
+                    </Badge>
+                  </div>
+                  <CardContent className="p-6">
+                    <div className="flex justify-between items-start mb-2">
+                      <div>
+                        <h4 className="font-extrabold text-slate-900 text-xl">{sanction.type}</h4>
+                        <p className="text-sm font-medium text-blue-600 uppercase tracking-wider">{sanction.bank}</p>
+                      </div>
+                      <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600">
+                        <ShieldCheck className="w-5 h-5" />
+                      </div>
+                    </div>
+                    <Separator className="my-4 opacity-50" />
+                    <p className="text-xs text-slate-400 font-medium italic">
+                      {sanction.date}
+                    </p>
                   </CardContent>
                 </Card>
               </motion.div>
@@ -719,7 +819,7 @@ export default function App() {
             <div className="space-y-6 col-span-1 md:col-span-1">
                <Logo light />
               <p className="text-sm leading-relaxed">
-                Empowering individuals and businesses with the right financial solutions. Authorized DSA for 30+ major financial institutions.
+                Empowering individuals and businesses with the right financial solutions. Authorized DSA for major financial institutions.
               </p>
               <div className="flex gap-4">
                 {[1, 2, 3].map(i => (

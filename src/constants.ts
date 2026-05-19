@@ -60,7 +60,7 @@ export const LOAN_TYPES = [
 export const TRUST_MARKERS = [
   { icon: ShieldCheck, title: 'Safe & Secure', description: 'Your data is encrypted and handled with utmost confidentiality.' },
   { icon: FileText, title: 'Paperless Process', description: 'Digital document submission for faster processing.' },
-  { icon: Coins, title: 'Best Rates', description: 'Affiliated with top 30+ Banks & NBFCs to get you the lowest rates.' }
+  { icon: Coins, title: 'Best Rates', description: 'Affiliated with top Banks & NBFCs to get you the lowest rates.' }
 ];
 
 export const PARTNERS = [
@@ -81,36 +81,36 @@ export const PARTNERS = [
     logoText: 'BOB'
   },
   {
-    name: 'HDFC Bank',
-    alias: 'HDFC',
+    name: 'Bank of India',
+    alias: 'BOI',
+    color: 'bg-blue-700',
+    description: 'A premier public sector bank offering specialized loan schemes for various segments with competitive rates.',
+    offerings: ['Agriculture Focus', 'Star Home Loans', 'Wide Network'],
+    logoText: 'BOI'
+  },
+  {
+    name: 'Union Bank of India',
+    alias: 'UBI',
     color: 'bg-red-600',
-    description: 'India\'s leading private sector bank providing premium financing solutions and quick disbursals.',
-    offerings: ['Instant Personal Loans', 'Lifestyle Priority Banking', 'Smart Flexi-loans'],
-    logoText: 'HDFC'
+    description: 'Known for its customer-centric approach and widely distributed branch network across rural and urban India.',
+    offerings: ['Union Home', 'Salary Gains', 'Digital Banking Perks'],
+    logoText: 'UBI'
   },
   {
-    name: 'ICICI Bank',
-    alias: 'ICICI',
-    color: 'bg-orange-700',
-    description: 'Renowned for technology-driven banking and a seamless end-to-end digital loan journey.',
-    offerings: ['Pre-approved Offers', 'Multi-functional App', 'Low Paperwork'],
-    logoText: 'ICICI'
+    name: 'Punjab National Bank',
+    alias: 'PNB',
+    color: 'bg-yellow-600',
+    description: 'One of the oldest and most trusted public sector banks in India, providing robust financial solutions.',
+    offerings: ['PNB Pride', 'Low Processing Charges', 'Long Tenure Loans'],
+    logoText: 'PNB'
   },
   {
-    name: 'Axis Bank',
-    alias: 'AXIS',
-    color: 'bg-pink-700',
-    description: 'Providing comprehensive banking services with a focus on retail and medium enterprise growth.',
-    offerings: ['Customized Tenure', 'Relationship Rewards', 'Top-up Facilities'],
-    logoText: 'AXIS'
-  },
-  {
-    name: 'Bajaj Finserv',
-    alias: 'BAJAJ',
-    color: 'bg-blue-800',
-    description: 'India\'s largest NBFC specializing in consumer finance and enterprise micro-loans.',
-    offerings: ['No Cost EMI', 'Flexi Term Loans', 'High Loan Amounts'],
-    logoText: 'BAJAJ'
+    name: 'Canara Bank',
+    alias: 'CANARA',
+    color: 'bg-blue-500',
+    description: 'A leading commercial bank with a strong domestic and international presence, focused on sustainable banking.',
+    offerings: ['Canara Home', 'Quick Education Loans', 'MSME Support'],
+    logoText: 'CANARA'
   }
 ];
 
@@ -137,3 +137,12 @@ export const TESTIMONIALS = [
     avatar: 'https://i.pravatar.cc/150?img=53'
   }
 ];
+
+export const SPECIALIZATIONS = {
+  balanceTransfer: {
+    title: 'Debt Consolidation & Balance Transfer',
+    description: 'We specialize in transferring small ticket loans from multiple banks and NBFCs into one single, manageable EMI with lower interest rates.',
+    policy: 'Please note: We do not take over Payday loans or similar high-interest short-term loans.',
+    exception: 'Payday loan takeover is only possible via collateral-backed financing.'
+  }
+};
