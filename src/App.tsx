@@ -405,11 +405,11 @@ export default function App() {
       </section>
 
       {/* Calculators Section */}
-      <section id="emi-calculator" className="py-24 bg-slate-900 text-white overflow-hidden relative">
-        <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none">
+      <section id="emi-calculator" className="py-24 bg-white border-y border-slate-100 overflow-hidden relative">
+        <div className="absolute top-0 left-0 w-full h-full opacity-[0.03] pointer-events-none">
           <div className="grid grid-cols-12 h-full">
             {Array.from({length: 12}).map((_, i) => (
-              <div key={i} className="border-r border-white h-full"></div>
+              <div key={i} className="border-r border-slate-900 h-full"></div>
             ))}
           </div>
         </div>
@@ -418,9 +418,9 @@ export default function App() {
           <div className="grid lg:grid-cols-12 gap-16 items-center">
             <div className="lg:col-span-4 space-y-8">
               <div className="space-y-4">
-                <Badge className="bg-emerald-500/20 text-emerald-400 border-none uppercase tracking-widest text-[10px] py-1 px-3">Power Tools</Badge>
-                <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight">Plan Your Finances Better</h2>
-                <p className="text-slate-400 leading-relaxed text-lg">
+                <Badge className="bg-emerald-100 text-emerald-700 border-none uppercase tracking-widest text-[10px] py-1 px-3">Power Tools</Badge>
+                <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900">Plan Your Finances Better</h2>
+                <p className="text-slate-600 leading-relaxed text-lg">
                   Use our advanced calculators to understand your monthly commitments and eligibility before you apply.
                 </p>
               </div>
@@ -432,12 +432,12 @@ export default function App() {
                   { t: 'Prepayment Tool', d: 'See how much and when you can save' }
                 ].map((item, i) => (
                   <div key={i} className="flex gap-4 items-start">
-                    <div className="w-6 h-6 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-500 flex-shrink-0 mt-1">
+                    <div className="w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 flex-shrink-0 mt-1">
                       <Plus className="w-4 h-4" />
                     </div>
                     <div>
-                      <h5 className="font-bold text-white uppercase text-xs tracking-wider">{item.t}</h5>
-                      <p className="text-slate-400 text-sm mt-1">{item.d}</p>
+                      <h5 className="font-bold text-slate-900 uppercase text-xs tracking-wider">{item.t}</h5>
+                      <p className="text-slate-500 text-sm mt-1">{item.d}</p>
                     </div>
                   </div>
                 ))}
@@ -447,16 +447,20 @@ export default function App() {
             <div className="lg:col-span-8">
               <Tabs defaultValue="emi" className="w-full">
                 <div className="flex justify-center mb-6">
-                  <TabsList className="bg-white/10 p-1 border border-white/20">
-                    <TabsTrigger value="emi" className="data-[state=active]:bg-blue-500 data-[state=active]:text-white">EMI Calculator</TabsTrigger>
-                    <TabsTrigger value="eligibility" className="data-[state=active]:bg-amber-500 data-[state=active]:text-white">Eligibility Tool</TabsTrigger>
+                  <TabsList className="bg-slate-100 p-1 border border-slate-200">
+                    <TabsTrigger value="emi" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white text-slate-600">EMI Calculator</TabsTrigger>
+                    <TabsTrigger value="eligibility" className="data-[state=active]:bg-amber-500 data-[state=active]:text-white text-slate-600">Eligibility Tool</TabsTrigger>
                   </TabsList>
                 </div>
                 <TabsContent value="emi">
-                  <EMICalculator />
+                  <div className="bg-slate-50 rounded-3xl p-1 border border-slate-100">
+                    <EMICalculator />
+                  </div>
                 </TabsContent>
                 <TabsContent value="eligibility">
-                  <EligibilityCalculator />
+                  <div className="bg-slate-50 rounded-3xl p-1 border border-slate-100">
+                    <EligibilityCalculator />
+                  </div>
                 </TabsContent>
               </Tabs>
             </div>
