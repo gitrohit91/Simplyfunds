@@ -130,9 +130,16 @@ export default function LeadForm({ user }: LeadFormProps) {
               <h3 className="text-xl font-bold">Authentication Required</h3>
               <p className="text-slate-500">Please sign in with your Google account to submit a loan application securely.</p>
             </div>
-            <Button variant="outline" className="w-full border-blue-600 text-blue-600 h-12 rounded-xl" onClick={() => setIsOpen(false)}>
-              Close & Log In from Menu
-            </Button>
+            <div className="flex flex-col gap-3">
+              <Button variant="outline" className="w-full border-blue-600 text-blue-600 h-12 rounded-xl" onClick={() => setIsOpen(false)}>
+                Close & Log In from Menu
+              </Button>
+              <a href="mailto:support@simplyfunds.in?subject=Loan Inquiry" className="w-full">
+                <Button variant="ghost" className="w-full text-slate-400 hover:text-blue-600 text-xs">
+                  Or inquiry via email: support@simplyfunds.in
+                </Button>
+              </a>
+            </div>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="p-8 space-y-6 bg-white shrink-0">

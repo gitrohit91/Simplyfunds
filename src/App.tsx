@@ -14,6 +14,7 @@ import {
   Send,
   LogOut,
   FileText,
+  MessageCircle,
   User as UserIcon
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -315,9 +316,28 @@ export default function App() {
                       ))}
                     </div>
                   </div>
-                  <Button type="submit" className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white text-lg font-bold shadow-lg shadow-emerald-100">
-                    Get Free Consultation
-                  </Button>
+                  <div className="space-y-3">
+                    <Button type="submit" className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white text-lg font-bold shadow-lg shadow-emerald-100">
+                      Get Free Consultation
+                    </Button>
+                    <a 
+                      href="https://wa.me/918100617164" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="block w-full"
+                    >
+                      <Button type="button" className="w-full h-12 bg-[#25D366] hover:bg-[#20ba59] text-white font-bold flex items-center justify-center gap-2 shadow-lg shadow-emerald-50 border-none">
+                        <MessageCircle className="w-5 h-5" />
+                        Chat on WhatsApp
+                      </Button>
+                    </a>
+                    <a href="mailto:support@simplyfunds.in?subject=Quick Loan Inquiry" className="block w-full">
+                      <Button type="button" variant="ghost" className="w-full h-12 text-blue-600 hover:bg-blue-50 hover:text-blue-700 font-bold flex items-center justify-center gap-2 border border-blue-100">
+                        <MessageSquare className="w-4 h-4" />
+                        Quick Inquiry via Email
+                      </Button>
+                    </a>
+                  </div>
                 </form>
               </CardContent>
             </Card>
@@ -882,9 +902,27 @@ export default function App() {
                   </div>
                 </div>
                 <div className="flex gap-4 items-start">
+                  <div className="w-5 h-5 text-[#25D366] mt-1">
+                    <MessageCircle className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <a 
+                      href="https://wa.me/918100617164" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="hover:text-white transition-colors"
+                    >
+                      <h6 className="text-white text-sm font-bold">WhatsApp Inquiry</h6>
+                      <p className="text-xs mt-1">Instant Chat Support</p>
+                    </a>
+                  </div>
+                </div>
+                <div className="flex gap-4 items-start">
                   <HelpCircle className="w-5 h-5 text-emerald-500 mt-1" />
                   <div>
-                    <h6 className="text-white text-sm font-bold">support@simplyfunds.in</h6>
+                    <a href="mailto:support@simplyfunds.in" className="hover:text-white transition-colors">
+                      <h6 className="text-white text-sm font-bold">support@simplyfunds.in</h6>
+                    </a>
                     <p className="text-xs mt-1">Response within 4 hours</p>
                   </div>
                 </div>
