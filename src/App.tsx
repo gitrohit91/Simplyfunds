@@ -294,7 +294,7 @@ export default function App() {
                   </div>
                   <div className="space-y-3">
                     <Button type="submit" className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white text-lg font-bold shadow-lg shadow-emerald-100">
-                      Get Free Consultation
+                      Submit Inquiry
                     </Button>
                     <a 
                       href="https://wa.me/918100617164" 
@@ -304,7 +304,7 @@ export default function App() {
                     >
                       <Button type="button" className="w-full h-12 bg-[#25D366] hover:bg-[#20ba59] text-white font-bold flex items-center justify-center gap-2 shadow-lg shadow-emerald-50 border-none">
                         <MessageCircle className="w-5 h-5" />
-                        Chat on WhatsApp
+                        Free Consultation over WhatsApp
                       </Button>
                     </a>
                     <a href="mailto:support@simplyfunds.in?subject=Quick Loan Inquiry" className="block w-full">

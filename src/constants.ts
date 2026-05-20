@@ -25,15 +25,15 @@ export const LOAN_TYPES = [
     description: 'Quick funds for your personal needs, from vacations to medical emergencies.',
     icon: User,
     interestRate: '10.5 - 15%',
-    maxTenure: '5 Years',
+    maxTenure: '7 Years',
     documents: ['Aadhaar Card', 'PAN Card', '3 Months Bank Statement', 'Salary Slips']
   },
   {
     id: 'business',
-    title: 'Business Loan',
-    description: 'Fuel your business growth with collateral-free and secured business loans.',
+    title: 'MSME CC/OD & Mudra Loans',
+    description: 'Fuel your business growth with collateral-free and secured business loans, CC/OD limits, and Mudra schemes.',
     icon: Briefcase,
-    interestRate: '12 - 18%',
+    interestRate: '9.50 - 12.50%',
     maxTenure: '7 Years',
     documents: ['Business Proof', 'ITR (Last 2 Years)', 'Bank Statement (1 Year)', 'GST Returns']
   },
