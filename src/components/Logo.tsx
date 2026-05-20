@@ -7,8 +7,15 @@ interface LogoProps {
 }
 
 const Logo: React.FC<LogoProps> = ({ className = "", light = false }) => {
+  const handleClick = () => {
+    window.location.reload();
+  };
+
   return (
-    <div className={`flex items-center gap-3 ${className}`}>
+    <div 
+      className={`flex items-center gap-3 cursor-pointer select-none ${className}`}
+      onClick={handleClick}
+    >
       <div className="relative w-10 h-10">
         <motion.svg 
           viewBox="0 0 100 100" 

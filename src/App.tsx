@@ -506,9 +506,6 @@ export default function App() {
                         ))}
                       </div>
                     </div>
-                    <Button variant="ghost" className="w-full text-slate-400 hover:text-blue-600 hover:bg-blue-50 text-xs p-0 h-auto justify-start font-medium group/btn">
-                      Visit Partner Page <ArrowRight className="w-3 h-3 ml-1 group-hover/btn:translate-x-1 transition-transform" />
-                    </Button>
                   </CardContent>
                 </Card>
               </motion.div>
@@ -580,10 +577,6 @@ export default function App() {
                         )}
                       </div>
                     </div>
-
-                    <Button variant="ghost" className="w-full text-blue-600 hover:text-blue-700 hover:bg-blue-50 group-hover:bg-blue-50 p-0 h-auto font-bold justify-between">
-                      Learn More <ArrowRight className="w-4 h-4 ml-2" />
-                    </Button>
                   </CardContent>
                 </Card>
               </motion.div>
