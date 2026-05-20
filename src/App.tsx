@@ -71,6 +71,15 @@ export default function App() {
   const [advisorQuery, setAdvisorQuery] = useState('');
   const [advisorResponse, setAdvisorResponse] = useState('');
   const [isAdvisorLoading, setIsAdvisorLoading] = useState(false);
+  const [activeCalculatorTab, setActiveCalculatorTab] = useState('eligibility');
+
+  const handleTabChangeAndScroll = (tabValue: 'eligibility' | 'emi') => {
+    setActiveCalculatorTab(tabValue);
+    const element = document.getElementById('emi-calculator');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -218,7 +227,12 @@ export default function App() {
 
             <div className="flex flex-wrap gap-4">
               <LeadForm user={user} />
-              <Button size="lg" variant="outline" className="h-14 px-8 text-lg rounded-xl border-2 border-slate-200 hover:border-amber-500 hover:text-amber-600 transition-all">
+              <Button 
+                onClick={() => handleTabChangeAndScroll('eligibility')}
+                size="lg" 
+                variant="outline" 
+                className="h-14 px-8 text-lg rounded-xl border-2 border-slate-200 hover:border-amber-500 hover:text-amber-600 transition-all cursor-pointer"
+              >
                 Check Eligibility
               </Button>
             </div>
@@ -427,7 +441,7 @@ export default function App() {
             </div>
 
             <div className="lg:col-span-8">
-              <Tabs defaultValue="eligibility" className="w-full">
+              <Tabs value={activeCalculatorTab} onValueChange={setActiveCalculatorTab} className="w-full">
                 <div className="flex justify-center mb-6">
                   <TabsList className="bg-slate-100 p-1 border border-slate-200">
                     <TabsTrigger value="eligibility" className="data-[state=active]:bg-amber-500 data-[state=active]:text-white text-slate-600">Eligibility Tool</TabsTrigger>
@@ -845,11 +859,21 @@ export default function App() {
 
             <div className="space-y-6">
               <h5 className="font-bold text-white text-sm uppercase tracking-widest">Tools</h5>
-              <div className="grid grid-cols-1 gap-3 text-sm">
-                <a href="#" className="hover:text-white transition-colors">EMI Calculator</a>
-                <a href="#" className="hover:text-white transition-colors">Eligibility Finder</a>
-                <a href="#" className="hover:text-white transition-colors">Document Picker</a>
-                <a href="#" className="hover:text-white transition-colors">Bank Partner List</a>
+              <div className="grid grid-cols-1 gap-3 text-sm items-start">
+                <button 
+                  onClick={() => handleTabChangeAndScroll('emi')} 
+                  className="hover:text-white transition-colors text-left cursor-pointer bg-transparent border-none p-0 text-slate-400"
+                >
+                  EMI Calculator
+                </button>
+                <button 
+                  onClick={() => handleTabChangeAndScroll('eligibility')} 
+                  className="hover:text-white transition-colors text-left cursor-pointer bg-transparent border-none p-0 text-slate-400"
+                >
+                  Eligibility Finder
+                </button>
+                <a href="#document-checklist" className="hover:text-white transition-colors">Document Picker</a>
+                <a href="#partners" className="hover:text-white transition-colors">Bank Partner List</a>
               </div>
             </div>
 
