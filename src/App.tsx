@@ -409,8 +409,8 @@ export default function App() {
 
               <div className="space-y-6">
                 {[
-                  { t: 'EMI Calculator', d: 'Predict your monthly outflows' },
                   { t: 'Eligibility Tool', d: 'Based on income and existing obligations' },
+                  { t: 'EMI Calculator', d: 'Predict your monthly outflows' },
                   { t: 'Prepayment Tool', d: 'See how much and when you can save' }
                 ].map((item, i) => (
                   <div key={i} className="flex gap-4 items-start">
@@ -427,21 +427,21 @@ export default function App() {
             </div>
 
             <div className="lg:col-span-8">
-              <Tabs defaultValue="emi" className="w-full">
+              <Tabs defaultValue="eligibility" className="w-full">
                 <div className="flex justify-center mb-6">
                   <TabsList className="bg-slate-100 p-1 border border-slate-200">
-                    <TabsTrigger value="emi" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white text-slate-600">EMI Calculator</TabsTrigger>
                     <TabsTrigger value="eligibility" className="data-[state=active]:bg-amber-500 data-[state=active]:text-white text-slate-600">Eligibility Tool</TabsTrigger>
+                    <TabsTrigger value="emi" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white text-slate-600">EMI Calculator</TabsTrigger>
                   </TabsList>
                 </div>
-                <TabsContent value="emi">
-                  <div className="bg-slate-50 rounded-3xl p-1 border border-slate-100">
-                    <EMICalculator />
-                  </div>
-                </TabsContent>
                 <TabsContent value="eligibility">
                   <div className="bg-slate-50 rounded-3xl p-1 border border-slate-100">
                     <EligibilityCalculator />
+                  </div>
+                </TabsContent>
+                <TabsContent value="emi">
+                  <div className="bg-slate-50 rounded-3xl p-1 border border-slate-100">
+                    <EMICalculator />
                   </div>
                 </TabsContent>
               </Tabs>

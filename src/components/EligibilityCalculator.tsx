@@ -13,15 +13,26 @@ export default function EligibilityCalculator() {
   const [emis, setEmis] = useState<number>(0);
   const [deductions, setDeductions] = useState<number>(0);
   const [tenure, setTenure] = useState<number>(20);
+  const [tenureType, setTenureType] = useState<'years' | 'months'>('years');
   const [rate, setRate] = useState<number>(9);
   const [foir, setFoir] = useState<string>("60");
+
+  const handleTenureTypeChange = (type: 'years' | 'months') => {
+    if (type === tenureType) return;
+    if (type === 'months') {
+      setTenure(prev => prev * 12);
+    } else {
+      setTenure(prev => Math.round(prev / 12));
+    }
+    setTenureType(type);
+  };
 
   const calculateEligibility = () => {
     // FOIR of selected percentage
     const foirMultiplier = Number(foir) / 100;
     const maxEMI = (income * foirMultiplier) - emis - deductions;
     const r = rate / 12 / 100;
-    const n = tenure * 12;
+    const n = tenureType === 'years' ? tenure * 12 : tenure;
     
     // Reverse EMI formula: P = (EMI * ( (1+r)^n - 1 )) / ( r * (1+r)^n )
     const maxLoan = (maxEMI * (Math.pow(1 + r, n) - 1)) / (r * Math.pow(1 + r, n));
@@ -76,7 +87,25 @@ export default function EligibilityCalculator() {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="elig-tenure">Tenure (Years)</Label>
+              <div className="flex justify-between items-center h-5">
+                <Label htmlFor="elig-tenure" className="text-sm">Tenure</Label>
+                <div className="flex bg-slate-100 rounded-md p-0.5 text-xs text-slate-500 scale-90 origin-right">
+                  <button 
+                    type="button"
+                    onClick={() => handleTenureTypeChange('years')}
+                    className={`px-2 py-0.5 rounded transition-all cursor-pointer ${tenureType === 'years' ? 'bg-white text-slate-800 shadow-sm font-semibold' : 'hover:text-slate-800'}`}
+                  >
+                    Yr
+                  </button>
+                  <button 
+                    type="button"
+                    onClick={() => handleTenureTypeChange('months')}
+                    className={`px-2 py-0.5 rounded transition-all cursor-pointer ${tenureType === 'months' ? 'bg-white text-slate-800 shadow-sm font-semibold' : 'hover:text-slate-800'}`}
+                  >
+                    Mo
+                  </button>
+                </div>
+              </div>
               <Input 
                 id="elig-tenure" 
                 type="number" 
@@ -103,6 +132,7 @@ export default function EligibilityCalculator() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="40">40% FOIR</SelectItem>
+                <SelectItem value="50">50% FOIR</SelectItem>
                 <SelectItem value="60">60% FOIR</SelectItem>
                 <SelectItem value="65">65% FOIR</SelectItem>
                 <SelectItem value="70">70% FOIR</SelectItem>

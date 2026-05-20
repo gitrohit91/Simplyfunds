@@ -9,8 +9,8 @@ import {
 export default function TermsOfService() {
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <button className="hover:text-white transition-colors cursor-pointer text-xs">Terms of Service</button>
+      <DialogTrigger render={<button className="hover:text-white transition-colors cursor-pointer text-xs" />}>
+        Terms of Service
       </DialogTrigger>
       <DialogContent className="sm:max-w-[700px] max-h-[80vh] overflow-y-auto">
         <DialogHeader>

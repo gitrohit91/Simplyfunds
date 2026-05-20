@@ -9,8 +9,8 @@ import {
 export default function PrivacyPolicy() {
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <button className="hover:text-white transition-colors cursor-pointer text-xs">Privacy Policy</button>
+      <DialogTrigger render={<button className="hover:text-white transition-colors cursor-pointer text-xs" />}>
+        Privacy Policy
       </DialogTrigger>
       <DialogContent className="sm:max-w-[700px] max-h-[80vh] overflow-y-auto">
         <DialogHeader>
