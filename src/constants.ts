@@ -142,7 +142,7 @@ export const TESTIMONIALS = [
   {
     name: 'Ankur Rudra',
     role: 'Business Person',
-    content: 'SimplyFunds\' online EMI calculator and AI advisor guided me perfectly. I received my BOB Personal Loan sanction within 3 days. Their transparency is commendable.',
+    content: 'SimplyFunds\' online EMI calculator guided me perfectly, and Rohit Sir helped me throughout the process. I received my BOB Personal Loan sanction within 3 days. Their transparency is commendable.',
     rating: 5
   },
   {
