@@ -118,44 +118,38 @@ export const TESTIMONIALS = [
   {
     name: 'Chiranjib Seal',
     role: 'Central Govt. Employee',
-    content: 'Having both my major business Personal Loan and subsequent Home Loan processed by SimplyFunds was an absolute dream. Their transparency is unmatched, and they arranged extremely competitive rates!',
-    rating: 5,
-    avatar: 'https://i.pravatar.cc/150?img=11'
+    content: 'Having both my major SBI Personal Loan for debt consolidation and subsequent BOI Home Loan Balance Transfer & Top-up processed by SimplyFunds was an absolute dream. Their transparency is unmatched, and they arranged extremely competitive rates!',
+    rating: 5
   },
   {
     name: 'Kakali Ganguly',
     role: 'Pvt. Employee',
-    content: 'Excellent service! SimplyFunds helped me secure a high-ticket Personal Loan at an interest rate lower than most banks, with zero hidden charges. Highly recommend their transparent fee structure!',
-    rating: 5,
-    avatar: 'https://i.pravatar.cc/150?img=47'
+    content: 'Excellent service! SimplyFunds helped me secure a high-ticket BOB Personal Loan for debt consolidation at an interest rate lower than most banks, with zero hidden charges. Highly recommend their transparent fee structure!',
+    rating: 5
   },
   {
     name: 'Nupur Karmakar',
     role: 'AAI Employee',
-    content: 'Excellent support from start to finish! They helped me choose the best personal loan with the lowest interest rate and flexible repayment options. Absolutely transparent and helpful.',
-    rating: 5,
-    avatar: 'https://i.pravatar.cc/150?img=34'
+    content: 'Excellent support from start to finish! They helped me choose the best BOB Personal Loan with the lowest interest rate and flexible repayment options. Absolutely transparent and helpful.',
+    rating: 5
   },
   {
     name: 'Anushree Biswas Dutt',
     role: 'Pvt. Employee',
-    content: 'Highly professional and transparent team. They assisted me with an urgent high-value Personal Loan smoothly with minimal documents. Completely hassle-free!',
-    rating: 5,
-    avatar: 'https://i.pravatar.cc/150?img=49'
+    content: 'Highly professional and transparent team. They assisted me with an urgent high-value BOB Personal Loan smoothly with minimal documents. Completely hassle-free!',
+    rating: 5
   },
   {
     name: 'Ankur Rudra',
     role: 'Business Person',
-    content: 'SimplyFunds\' online EMI calculator and AI advisor guided me perfectly. I received my loan sanction within 3 days without visiting banks. Their transparency is commendable.',
-    rating: 5,
-    avatar: 'https://i.pravatar.cc/150?img=18'
+    content: 'SimplyFunds\' online EMI calculator and AI advisor guided me perfectly. I received my BOB Personal Loan sanction within 3 days. Their transparency is commendable.',
+    rating: 5
   },
   {
     name: 'Debjyoti Paul',
     role: 'TCS Employee',
-    content: 'Their loan assistance was fantastic. They helped me organize the proper documentation and secured the high-bracket Personal Loan funding my enterprise needed.',
-    rating: 5,
-    avatar: 'https://i.pravatar.cc/150?img=15'
+    content: 'Their loan assistance was fantastic. They helped me organize the proper documentation and secured the SBI Personal Loan for my medical needs quickly when time was of the essence.',
+    rating: 5
   }
 ];
 
@@ -166,7 +160,8 @@ export const VERIFIED_SANCTIONS = [
     amount: 2720000,
     charges: 311250,
     other: 0,
-    type: 'PL'
+    type: 'PL',
+    bank: 'SBI'
   },
   {
     name: 'Kakali Ganguly',
@@ -174,7 +169,8 @@ export const VERIFIED_SANCTIONS = [
     amount: 1600000,
     charges: 192000,
     other: 0,
-    type: 'PL'
+    type: 'PL',
+    bank: 'BOB'
   },
   {
     name: 'Nupur Karmakar',
@@ -182,7 +178,8 @@ export const VERIFIED_SANCTIONS = [
     amount: 1910000,
     charges: 229200,
     other: 0,
-    type: 'PL'
+    type: 'PL',
+    bank: 'BOB'
   },
   {
     name: 'Anushree Biswas Dutt',
@@ -190,7 +187,8 @@ export const VERIFIED_SANCTIONS = [
     amount: 500000,
     charges: 60000,
     other: 0,
-    type: 'PL'
+    type: 'PL',
+    bank: 'BOB'
   },
   {
     name: 'Ankur Rudra',
@@ -198,7 +196,8 @@ export const VERIFIED_SANCTIONS = [
     amount: 1200000,
     charges: 180000,
     other: 0,
-    type: 'PL'
+    type: 'PL',
+    bank: 'BOB'
   },
   {
     name: 'Debjyoti Paul',
@@ -206,7 +205,8 @@ export const VERIFIED_SANCTIONS = [
     amount: 2886000,
     charges: 100000,
     other: 0,
-    type: 'PL'
+    type: 'PL',
+    bank: 'SBI'
   },
   {
     name: 'Chiranjib Seal',
@@ -214,7 +214,8 @@ export const VERIFIED_SANCTIONS = [
     amount: 4488000,
     charges: 448800,
     other: 17792,
-    type: 'HL'
+    type: 'HL',
+    bank: 'BOI'
   }
 ];
 

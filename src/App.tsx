@@ -650,8 +650,12 @@ export default function App() {
                               <p className="text-[9px] uppercase font-bold text-slate-400 tracking-wider">Official Ledger Record:</p>
                               {customerSanctions.map((s, sIndex) => (
                                 <div key={sIndex} className="flex justify-between items-center text-xs">
-                                  <span className="font-semibold text-slate-700">
-                                    ₹{(s.amount / 100000).toFixed(2)} Lakhs <span className="text-[10px] font-medium text-slate-400">({s.type})</span>
+                                  <span className="font-semibold text-slate-700 flex items-center gap-1.5">
+                                    ₹{(s.amount / 100000).toFixed(2)} Lakhs 
+                                    <span className="text-[10px] font-bold text-amber-700 bg-amber-50 px-1 rounded">
+                                      {s.bank}
+                                    </span>
+                                    <span className="text-[10px] font-medium text-slate-400">({s.type})</span>
                                   </span>
                                   <span className="text-[10px] font-mono text-slate-500 bg-white px-1.5 py-0.5 rounded border border-slate-200">
                                     {s.date}
@@ -661,12 +665,9 @@ export default function App() {
                             </div>
 
                             <div className="flex items-center gap-4">
-                              <img 
-                                src={testimonial.avatar} 
-                                alt={testimonial.name} 
-                                referrerPolicy="no-referrer"
-                                className="w-12 h-12 rounded-full object-cover border border-slate-100 bg-slate-100"
-                              />
+                              <div className="w-11 h-11 rounded-full bg-slate-100 text-slate-700 border border-slate-200 flex items-center justify-center font-extrabold text-sm tracking-wide shrink-0">
+                                {testimonial.name.split(' ').map(n => n[0]).join('')}
+                              </div>
                               <div>
                                 <h4 className="font-bold text-slate-900 text-sm">{testimonial.name}</h4>
                                 <p className="text-xs text-amber-600 font-semibold">{testimonial.role}</p>
@@ -689,7 +690,7 @@ export default function App() {
                   <div className="relative max-w-md w-full">
                     <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <Input
-                      placeholder="Search ledger entries by name or loan type..."
+                      placeholder="Search ledger by name, bank, or loan type..."
                       value={sanctionsSearch}
                       onChange={(e) => setSanctionsSearch(e.target.value)}
                       className="pl-10 h-11 border-slate-200 focus-visible:ring-amber-500"
@@ -717,13 +718,15 @@ export default function App() {
                         <th className="py-4 px-6 border-b border-slate-100">Customer Name</th>
                         <th className="py-4 px-6 border-b border-slate-100">Sanction Date</th>
                         <th className="py-4 px-6 text-right border-b border-slate-100">Loan Amount</th>
+                        <th className="py-4 px-6 text-center border-b border-slate-100">Sanctioning Bank</th>
                         <th className="py-4 px-6 text-center border-b border-slate-100">Product Code</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-50 text-sm">
                       {VERIFIED_SANCTIONS.filter(s => 
                         s.name.toLowerCase().includes(sanctionsSearch.toLowerCase()) ||
-                        s.type.toLowerCase().includes(sanctionsSearch.toLowerCase())
+                        s.type.toLowerCase().includes(sanctionsSearch.toLowerCase()) ||
+                        (s.bank && s.bank.toLowerCase().includes(sanctionsSearch.toLowerCase()))
                       ).map((item, idx) => (
                         <tr key={idx} className="hover:bg-slate-50/50 transition-colors">
                           <td className="py-4 px-6 font-bold text-slate-900 flex items-center gap-2">
@@ -733,6 +736,9 @@ export default function App() {
                           <td className="py-4 px-6 text-slate-500 font-medium font-mono">{item.date}</td>
                           <td className="py-4 px-6 text-right font-extrabold text-slate-800 font-mono">
                             ₹{item.amount.toLocaleString('en-IN')}
+                          </td>
+                          <td className="py-4 px-6 text-center font-semibold text-slate-700">
+                            {item.bank}
                           </td>
                           <td className="py-4 px-6 text-center">
                             <Badge className={`${
@@ -747,10 +753,11 @@ export default function App() {
                       ))}
                       {VERIFIED_SANCTIONS.filter(s => 
                         s.name.toLowerCase().includes(sanctionsSearch.toLowerCase()) ||
-                        s.type.toLowerCase().includes(sanctionsSearch.toLowerCase())
+                        s.type.toLowerCase().includes(sanctionsSearch.toLowerCase()) ||
+                        (s.bank && s.bank.toLowerCase().includes(sanctionsSearch.toLowerCase()))
                       ).length === 0 && (
                         <tr>
-                          <td colSpan={4} className="py-12 text-center text-slate-400">
+                          <td colSpan={5} className="py-12 text-center text-slate-400">
                             No verified entries matching "{sanctionsSearch}" found.
                           </td>
                         </tr>
