@@ -117,42 +117,42 @@ export const PARTNERS = [
 export const TESTIMONIALS = [
   {
     name: 'Chiranjib Seal',
-    role: 'Business Owner & Homeowner',
+    role: 'Central Govt. Employee',
     content: 'Having both my major business Personal Loan and subsequent Home Loan processed by SimplyFunds was an absolute dream. Their transparency is unmatched, and they arranged extremely competitive rates!',
     rating: 5,
     avatar: 'https://i.pravatar.cc/150?img=11'
   },
   {
     name: 'Kakali Ganguly',
-    role: 'High School Teacher',
+    role: 'Pvt. Employee',
     content: 'Excellent service! SimplyFunds helped me secure a high-ticket Personal Loan at an interest rate lower than most banks, with zero hidden charges. Highly recommend their transparent fee structure!',
     rating: 5,
     avatar: 'https://i.pravatar.cc/150?img=47'
   },
   {
     name: 'Nupur Karmakar',
-    role: 'IT Professional',
+    role: 'AAI Employee',
     content: 'Excellent support from start to finish! They helped me choose the best personal loan with the lowest interest rate and flexible repayment options. Absolutely transparent and helpful.',
     rating: 5,
     avatar: 'https://i.pravatar.cc/150?img=34'
   },
   {
     name: 'Anushree Biswas Dutt',
-    role: 'Doctor',
+    role: 'Pvt. Employee',
     content: 'Highly professional and transparent team. They assisted me with an urgent high-value Personal Loan smoothly with minimal documents. Completely hassle-free!',
     rating: 5,
     avatar: 'https://i.pravatar.cc/150?img=49'
   },
   {
     name: 'Ankur Rudra',
-    role: 'Operations Manager',
+    role: 'Business Person',
     content: 'SimplyFunds\' online EMI calculator and AI advisor guided me perfectly. I received my loan sanction within 3 days without visiting banks. Their transparency is commendable.',
     rating: 5,
     avatar: 'https://i.pravatar.cc/150?img=18'
   },
   {
     name: 'Debjyoti Paul',
-    role: 'Entrepreneur',
+    role: 'TCS Employee',
     content: 'Their loan assistance was fantastic. They helped me organize the proper documentation and secured the high-bracket Personal Loan funding my enterprise needed.',
     rating: 5,
     avatar: 'https://i.pravatar.cc/150?img=15'

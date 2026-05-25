@@ -717,8 +717,6 @@ export default function App() {
                         <th className="py-4 px-6 border-b border-slate-100">Customer Name</th>
                         <th className="py-4 px-6 border-b border-slate-100">Sanction Date</th>
                         <th className="py-4 px-6 text-right border-b border-slate-100">Loan Amount</th>
-                        <th className="py-4 px-6 text-right border-b border-slate-100">Consultancy Fees</th>
-                        <th className="py-4 px-6 text-right border-b border-slate-100">Other Fees / GST</th>
                         <th className="py-4 px-6 text-center border-b border-slate-100">Product Code</th>
                       </tr>
                     </thead>
@@ -736,12 +734,6 @@ export default function App() {
                           <td className="py-4 px-6 text-right font-extrabold text-slate-800 font-mono">
                             ₹{item.amount.toLocaleString('en-IN')}
                           </td>
-                          <td className="py-4 px-6 text-right font-semibold text-emerald-600 font-mono">
-                            ₹{item.charges.toLocaleString('en-IN')}
-                          </td>
-                          <td className="py-4 px-6 text-right text-slate-500 font-mono">
-                            {item.other > 0 ? `₹${item.other.toLocaleString('en-IN')}` : '₹0'}
-                          </td>
                           <td className="py-4 px-6 text-center">
                             <Badge className={`${
                               item.type === 'PL' 
@@ -758,7 +750,7 @@ export default function App() {
                         s.type.toLowerCase().includes(sanctionsSearch.toLowerCase())
                       ).length === 0 && (
                         <tr>
-                          <td colSpan={6} className="py-12 text-center text-slate-400">
+                          <td colSpan={4} className="py-12 text-center text-slate-400">
                             No verified entries matching "{sanctionsSearch}" found.
                           </td>
                         </tr>
