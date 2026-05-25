@@ -116,25 +116,105 @@ export const PARTNERS = [
 
 export const TESTIMONIALS = [
   {
-    name: 'Anjali Sharma',
-    role: 'Homeowner',
-    content: 'SimplyFunds made my home loan process incredibly smooth. I was confused by different rates, but their advisor helped me pick SBI with a zero-processing fee offer. Highly recommended!',
+    name: 'Chiranjib Seal',
+    role: 'Business Owner & Homeowner',
+    content: 'Having both my major business Personal Loan and subsequent Home Loan processed by SimplyFunds was an absolute dream. Their transparency is unmatched, and they arranged extremely competitive rates!',
     rating: 5,
-    avatar: 'https://i.pravatar.cc/150?img=32'
+    avatar: 'https://i.pravatar.cc/150?img=11'
   },
   {
-    name: 'Vikram Malhotra',
-    role: 'Business Owner',
-    content: 'Needed urgent capital for my startup expansion. The digital process at SimplyFunds got me a business loan from ICICI Bank in just 48 hours. Minimum documentation and maximum speed.',
+    name: 'Kakali Ganguly',
+    role: 'High School Teacher',
+    content: 'Excellent service! SimplyFunds helped me secure a high-ticket Personal Loan at an interest rate lower than most banks, with zero hidden charges. Highly recommend their transparent fee structure!',
     rating: 5,
-    avatar: 'https://i.pravatar.cc/150?img=12'
+    avatar: 'https://i.pravatar.cc/150?img=47'
   },
   {
-    name: 'Rahul Verma',
-    role: 'Software Engineer',
-    content: 'The EMI calculator is very accurate. It helped me plan my personal loan before even talking to an agent. The AI advisor gave me great tips on improving my CIBIL score too.',
-    rating: 4,
-    avatar: 'https://i.pravatar.cc/150?img=53'
+    name: 'Nupur Karmakar',
+    role: 'IT Professional',
+    content: 'Excellent support from start to finish! They helped me choose the best personal loan with the lowest interest rate and flexible repayment options. Absolutely transparent and helpful.',
+    rating: 5,
+    avatar: 'https://i.pravatar.cc/150?img=34'
+  },
+  {
+    name: 'Anushree Biswas Dutt',
+    role: 'Doctor',
+    content: 'Highly professional and transparent team. They assisted me with an urgent high-value Personal Loan smoothly with minimal documents. Completely hassle-free!',
+    rating: 5,
+    avatar: 'https://i.pravatar.cc/150?img=49'
+  },
+  {
+    name: 'Ankur Rudra',
+    role: 'Operations Manager',
+    content: 'SimplyFunds\' online EMI calculator and AI advisor guided me perfectly. I received my loan sanction within 3 days without visiting banks. Their transparency is commendable.',
+    rating: 5,
+    avatar: 'https://i.pravatar.cc/150?img=18'
+  },
+  {
+    name: 'Debjyoti Paul',
+    role: 'Entrepreneur',
+    content: 'Their loan assistance was fantastic. They helped me organize the proper documentation and secured the high-bracket Personal Loan funding my enterprise needed.',
+    rating: 5,
+    avatar: 'https://i.pravatar.cc/150?img=15'
+  }
+];
+
+export const VERIFIED_SANCTIONS = [
+  {
+    name: 'Chiranjib Seal',
+    date: '20-04-2026',
+    amount: 2720000,
+    charges: 311250,
+    other: 0,
+    type: 'PL'
+  },
+  {
+    name: 'Kakali Ganguly',
+    date: '24-04-2026',
+    amount: 1600000,
+    charges: 192000,
+    other: 0,
+    type: 'PL'
+  },
+  {
+    name: 'Nupur Karmakar',
+    date: '06-05-2026',
+    amount: 1910000,
+    charges: 229200,
+    other: 0,
+    type: 'PL'
+  },
+  {
+    name: 'Anushree Biswas Dutt',
+    date: '08-05-2026',
+    amount: 500000,
+    charges: 60000,
+    other: 0,
+    type: 'PL'
+  },
+  {
+    name: 'Ankur Rudra',
+    date: '08-05-2026',
+    amount: 1200000,
+    charges: 180000,
+    other: 0,
+    type: 'PL'
+  },
+  {
+    name: 'Debjyoti Paul',
+    date: '12-05-2026',
+    amount: 2886000,
+    charges: 100000,
+    other: 0,
+    type: 'PL'
+  },
+  {
+    name: 'Chiranjib Seal',
+    date: '18-05-2026',
+    amount: 4488000,
+    charges: 448800,
+    other: 17792,
+    type: 'HL'
   }
 ];
 

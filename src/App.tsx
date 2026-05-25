@@ -15,7 +15,10 @@ import {
   LogOut,
   FileText,
   MessageCircle,
-  User as UserIcon
+  User as UserIcon,
+  Search,
+  Award,
+  Receipt
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Button } from '@/components/ui/button';
@@ -49,7 +52,7 @@ import LeadForm from './components/LeadForm';
 import Logo from './components/Logo';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import TermsOfService from './components/TermsOfService';
-import { LOAN_TYPES, TRUST_MARKERS, PARTNERS, TESTIMONIALS, SPECIALIZATIONS } from './constants';
+import { LOAN_TYPES, TRUST_MARKERS, PARTNERS, TESTIMONIALS, VERIFIED_SANCTIONS, SPECIALIZATIONS } from './constants';
 import { getLoanAdvice } from './services/geminiService';
 import { 
   auth, 
@@ -72,6 +75,7 @@ export default function App() {
   const [advisorResponse, setAdvisorResponse] = useState('');
   const [isAdvisorLoading, setIsAdvisorLoading] = useState(false);
   const [activeCalculatorTab, setActiveCalculatorTab] = useState('eligibility');
+  const [sanctionsSearch, setSanctionsSearch] = useState('');
 
   const handleTabChangeAndScroll = (tabValue: 'eligibility' | 'emi') => {
     setActiveCalculatorTab(tabValue);
@@ -585,96 +589,194 @@ export default function App() {
         </div>
       </section>
 
-      {/* Latest Sanctions Section */}
-      <section className="py-24 bg-slate-50">
+      {/* Testimonials & Sanction Logs Section */}
+      <section className="py-24 bg-slate-50 border-y border-slate-100">
         <div className="container mx-auto px-6">
           <div className="text-center space-y-4 mb-16">
-            <Badge className="bg-emerald-100 text-emerald-600 hover:bg-emerald-100 border-none uppercase tracking-widest text-[10px] py-1 px-3">Recent Success</Badge>
-            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight">Latest Sanctioned Loans</h2>
-            <p className="text-slate-500 max-w-2xl mx-auto">We take pride in turning applications into approvals. Here are some of our most recent success stories.</p>
+            <Badge className="bg-amber-100 text-amber-700 hover:bg-amber-100 border-none uppercase tracking-widest text-[10px] py-1 px-3">Transparency & Proof</Badge>
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight">Verified Customer Success</h2>
+            <p className="text-slate-500 max-w-2xl mx-auto">Explore authentic client feedback alongside our official, audited loan sanction logs to experience actual transparency.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { 
-                amount: "₹44,88,000", 
-                type: "Star Home Loan (Takeover + Topup)", 
-                bank: "Bank of India", 
-                bankShort: "BOI",
-                date: "Sanctioned on April 20, 2026",
-                isActualSanction: true,
-                tags: ["HOME LOAN", "TOP UP"]
-              },
-              { 
-                amount: "₹45,00,000", 
-                type: "Housing Loan", 
-                bank: "State Bank of India", 
-                bankShort: "SBI",
-                date: "Sanctioned on May 15, 2026",
-                isActualSanction: true,
-                tags: ["HOME LOAN", "NEW PURCHASE"]
-              },
-              { 
-                amount: "₹12,00,000", 
-                type: "Personal Loan", 
-                bank: "Bank of Baroda", 
-                bankShort: "BOB",
-                date: "Sanctioned on May 12, 2026",
-                isActualSanction: true,
-                tags: ["PERSONAL", "UNSECURED"]
-              }
-            ].map((sanction, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-              >
-                <Card className="h-full border-none shadow-lg overflow-hidden group ring-1 ring-slate-200">
-                  <div className="relative h-64 overflow-hidden bg-[#fafafa] border-b border-slate-100">
-                    {/* Official Document Visual */}
-                    <div className="absolute inset-0 p-6 flex flex-col items-center justify-center text-center space-y-4">
-                      <div className="w-16 h-16 rounded bg-white flex items-center justify-center text-blue-800 font-black border border-slate-200 shadow-sm text-lg">
-                        {sanction.bankShort}
-                      </div>
-                      <div className="space-y-1">
-                        <p className="text-[9px] uppercase font-bold text-slate-400 tracking-[0.2em]">Official Sanction Letter</p>
-                        <h5 className="font-extrabold text-slate-900 border-b-2 border-emerald-500 pb-1">Ref: {sanction.amount}</h5>
-                      </div>
-                      <div className="flex gap-2">
-                        {sanction.tags?.map(tag => (
-                          <div key={tag} className="bg-slate-100 px-2 py-1 rounded text-[8px] font-bold text-slate-600 border border-slate-200">{tag}</div>
-                        ))}
-                      </div>
-                      <div className="absolute top-4 right-4 -rotate-12">
-                        <div className="border-4 border-emerald-600/30 text-emerald-600/50 font-black px-2 py-0.5 rounded text-[10px] uppercase tracking-tighter">APPROVED</div>
-                      </div>
-                    </div>
-                    
-                    {/* Subtle Paper Texture Overlay */}
-                    <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/paper-fibers.png')]"></div>
+          <Tabs defaultValue="testimonials" className="w-full">
+            <div className="flex justify-center mb-12">
+              <TabsList className="bg-slate-100 p-1 rounded-xl border border-slate-200">
+                <TabsTrigger value="testimonials" className="px-6 py-2 rounded-lg text-sm font-semibold transition-all">
+                  Customer Reviews
+                </TabsTrigger>
+                <TabsTrigger value="ledger" className="px-6 py-2 rounded-lg text-sm font-semibold transition-all">
+                  Verified Sanctions Ledger
+                </TabsTrigger>
+              </TabsList>
+            </div>
+
+            <TabsContent value="testimonials">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {TESTIMONIALS.map((testimonial, i) => {
+                  // Find sanction info for this customer to render on their card
+                  const customerSanctions = VERIFIED_SANCTIONS.filter(s => s.name === testimonial.name);
+                  
+                  return (
+                    <motion.div
+                      key={testimonial.name}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.1 }}
+                    >
+                      <Card className="h-full border-none shadow-md overflow-hidden bg-white ring-1 ring-slate-100 flex flex-col justify-between hover:shadow-lg transition-transform hover:-translate-y-1">
+                        <CardContent className="p-8 flex flex-col h-full justify-between space-y-6">
+                          <div className="space-y-4">
+                            {/* Star Ratings */}
+                            <div className="flex justify-between items-center">
+                              <div className="flex gap-1">
+                                {Array.from({ length: 5 }).map((_, starIndex) => (
+                                  <Star key={starIndex} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                                ))}
+                              </div>
+                              <span className="text-[10px] bg-slate-50 text-slate-500 font-bold px-2 py-0.5 rounded uppercase tracking-wider flex items-center gap-1 border border-slate-100">
+                                <Award className="w-3 h-3 text-emerald-600 animate-pulse" /> Verified Sourcing
+                              </span>
+                            </div>
+                            
+                            <p className="text-slate-600 text-sm leading-relaxed italic">
+                              "{testimonial.content}"
+                            </p>
+                          </div>
+
+                          <div className="space-y-4 pt-4 border-t border-slate-100">
+                            {/* Verified Loan Badges */}
+                            <div className="bg-slate-50 border border-slate-100 rounded-xl p-3 space-y-2">
+                              <p className="text-[9px] uppercase font-bold text-slate-400 tracking-wider">Official Ledger Record:</p>
+                              {customerSanctions.map((s, sIndex) => (
+                                <div key={sIndex} className="flex justify-between items-center text-xs">
+                                  <span className="font-semibold text-slate-700">
+                                    ₹{(s.amount / 100000).toFixed(2)} Lakhs <span className="text-[10px] font-medium text-slate-400">({s.type})</span>
+                                  </span>
+                                  <span className="text-[10px] font-mono text-slate-500 bg-white px-1.5 py-0.5 rounded border border-slate-200">
+                                    {s.date}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+
+                            <div className="flex items-center gap-4">
+                              <img 
+                                src={testimonial.avatar} 
+                                alt={testimonial.name} 
+                                referrerPolicy="no-referrer"
+                                className="w-12 h-12 rounded-full object-cover border border-slate-100 bg-slate-100"
+                              />
+                              <div>
+                                <h4 className="font-bold text-slate-900 text-sm">{testimonial.name}</h4>
+                                <p className="text-xs text-amber-600 font-semibold">{testimonial.role}</p>
+                              </div>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </TabsContent>
+
+            <TabsContent value="ledger">
+              <div className="bg-white rounded-2xl border border-slate-100 shadow-lg overflow-hidden p-6 md:p-8 space-y-6">
+                
+                {/* Search and Summary Blocks */}
+                <div className="flex flex-col md:flex-row gap-6 justify-between items-stretch md:items-center">
+                  <div className="relative max-w-md w-full">
+                    <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    <Input
+                      placeholder="Search ledger entries by name or loan type..."
+                      value={sanctionsSearch}
+                      onChange={(e) => setSanctionsSearch(e.target.value)}
+                      className="pl-10 h-11 border-slate-200 focus-visible:ring-amber-500"
+                    />
                   </div>
-                  <CardContent className="p-6">
-                    <div className="flex justify-between items-start mb-2">
-                      <div>
-                        <h4 className="font-extrabold text-slate-900 text-lg leading-tight">{sanction.type}</h4>
-                        <p className="text-sm font-medium text-blue-600 tracking-wide mt-1">{sanction.bank}</p>
-                      </div>
-                      <div className="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0">
-                        <ShieldCheck className="w-5 h-5" />
-                      </div>
+                  
+                  {/* Ledger Counters */}
+                  <div className="flex gap-4 self-center md:self-auto">
+                    <div className="bg-amber-50 border border-amber-200/50 rounded-xl px-4 py-2 text-center">
+                      <span className="text-[10px] uppercase font-bold text-amber-700 tracking-wider block">Capital Sourced</span>
+                      <span className="font-extrabold text-slate-900 text-sm">₹1.53 Crores</span>
                     </div>
-                    <Separator className="my-4 opacity-30" />
-                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest flex items-center gap-2">
-                      <FileText className="w-3 h-3" />
-                      {sanction.date}
-                    </p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
+                    <div className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-center">
+                      <span className="text-[10px] uppercase font-bold text-slate-500 tracking-wider block">Verified Entries</span>
+                      <span className="font-extrabold text-slate-900 text-sm">7 Records</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Ledger Data Table */}
+                <div className="overflow-x-auto rounded-xl border border-slate-100">
+                  <table className="w-full text-left border-collapse min-w-[700px]">
+                    <thead>
+                      <tr className="bg-slate-50 border-b border-slate-100 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                        <th className="py-4 px-6 border-b border-slate-100">Customer Name</th>
+                        <th className="py-4 px-6 border-b border-slate-100">Sanction Date</th>
+                        <th className="py-4 px-6 text-right border-b border-slate-100">Loan Amount</th>
+                        <th className="py-4 px-6 text-right border-b border-slate-100">Consultancy Fees</th>
+                        <th className="py-4 px-6 text-right border-b border-slate-100">Other Fees / GST</th>
+                        <th className="py-4 px-6 text-center border-b border-slate-100">Product Code</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-50 text-sm">
+                      {VERIFIED_SANCTIONS.filter(s => 
+                        s.name.toLowerCase().includes(sanctionsSearch.toLowerCase()) ||
+                        s.type.toLowerCase().includes(sanctionsSearch.toLowerCase())
+                      ).map((item, idx) => (
+                        <tr key={idx} className="hover:bg-slate-50/50 transition-colors">
+                          <td className="py-4 px-6 font-bold text-slate-900 flex items-center gap-2">
+                            <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                            {item.name}
+                          </td>
+                          <td className="py-4 px-6 text-slate-500 font-medium font-mono">{item.date}</td>
+                          <td className="py-4 px-6 text-right font-extrabold text-slate-800 font-mono">
+                            ₹{item.amount.toLocaleString('en-IN')}
+                          </td>
+                          <td className="py-4 px-6 text-right font-semibold text-emerald-600 font-mono">
+                            ₹{item.charges.toLocaleString('en-IN')}
+                          </td>
+                          <td className="py-4 px-6 text-right text-slate-500 font-mono">
+                            {item.other > 0 ? `₹${item.other.toLocaleString('en-IN')}` : '₹0'}
+                          </td>
+                          <td className="py-4 px-6 text-center">
+                            <Badge className={`${
+                              item.type === 'PL' 
+                                ? 'bg-indigo-50 text-indigo-700 hover:bg-indigo-50 border-indigo-100' 
+                                : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-50 border-emerald-100'
+                            } border text-[10px] font-bold py-0.5 px-2`}>
+                              {item.type === 'PL' ? 'Personal Loan (PL)' : 'Home Loan (HL)'}
+                            </Badge>
+                          </td>
+                        </tr>
+                      ))}
+                      {VERIFIED_SANCTIONS.filter(s => 
+                        s.name.toLowerCase().includes(sanctionsSearch.toLowerCase()) ||
+                        s.type.toLowerCase().includes(sanctionsSearch.toLowerCase())
+                      ).length === 0 && (
+                        <tr>
+                          <td colSpan={6} className="py-12 text-center text-slate-400">
+                            No verified entries matching "{sanctionsSearch}" found.
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+
+                <div className="flex items-center gap-2.5 bg-slate-50 p-4 rounded-xl border border-dashed border-slate-200 text-xs text-slate-500">
+                  <Receipt className="w-4 h-4 text-slate-400 shrink-0" />
+                  <span>
+                    <strong>Fee Transparency Compliance:</strong> Service charges and consultation fees comply strictly with our <strong>5% to 15%</strong> policy parameters depending on processing complexity, and are fully disclosed before submission.
+                  </span>
+                </div>
+
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
       </section>
 
