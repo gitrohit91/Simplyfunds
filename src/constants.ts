@@ -150,10 +150,25 @@ export const TESTIMONIALS = [
     role: 'TCS Employee',
     content: 'Their loan assistance was fantastic. They helped me organize the proper documentation and secured the SBI Personal Loan for my medical needs quickly when time was of the essence.',
     rating: 5
+  },
+  {
+    name: 'Soumyajit Ghosh',
+    role: 'CESC Employee',
+    content: 'Securing my BOB Personal Loan through SimplyFunds was incredibly smooth. They managed an amazing sanctioned amount of ₹18.87 Lakhs with complete transparency and guided me through every documentation stage.',
+    rating: 5
   }
 ];
 
 export const VERIFIED_SANCTIONS = [
+  {
+    name: 'Soumyajit Ghosh',
+    date: '02-06-2026',
+    amount: 1887000,
+    charges: 0,
+    other: 0,
+    type: 'PL',
+    bank: 'BOB'
+  },
   {
     name: 'Chiranjib Seal',
     date: '20-04-2026',
