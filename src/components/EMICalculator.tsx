@@ -8,20 +8,35 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recha
 export default function EMICalculator() {
   const [amount, setAmount] = useState<number>(1000000);
   const [rate, setRate] = useState<number>(7.25);
-  const [tenure, setTenure] = useState<number>(10); // years
+  const [tenure, setTenure] = useState<number>(10); // years or months
+  const [tenureUnit, setTenureUnit] = useState<'years' | 'months'>('years');
 
   const calculateEMI = () => {
     const p = amount;
     const r = rate / 12 / 100;
-    const n = tenure * 12;
+    const n = tenureUnit === 'years' ? tenure * 12 : tenure;
+    
+    if (n <= 0) {
+      return { emi: 0, totalPayment: p, totalInterest: 0 };
+    }
+    
+    if (r === 0) {
+      const emi = p / n;
+      return {
+        emi: Math.round(emi),
+        totalPayment: p,
+        totalInterest: 0
+      };
+    }
+
     const emi = (p * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
     const totalPayment = emi * n;
     const totalInterest = totalPayment - p;
     
     return {
-      emi: Math.round(emi),
-      totalPayment: Math.round(totalPayment),
-      totalInterest: Math.round(totalInterest)
+      emi: isNaN(emi) || !isFinite(emi) ? 0 : Math.round(emi),
+      totalPayment: isNaN(totalPayment) || !isFinite(totalPayment) ? p : Math.round(totalPayment),
+      totalInterest: isNaN(totalInterest) || !isFinite(totalInterest) ? 0 : Math.round(totalInterest)
     };
   };
 
@@ -63,13 +78,52 @@ export default function EMICalculator() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="tenure">Tenure (Years)</Label>
+            <div className="flex justify-between items-center">
+              <Label htmlFor="tenure">
+                Tenure ({tenureUnit === 'years' ? 'Years' : 'Months'})
+              </Label>
+              <div className="flex bg-slate-100 p-0.5 rounded-lg border border-slate-200">
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (tenureUnit !== 'years') {
+                      setTenureUnit('years');
+                      setTenure(prev => Math.max(1, Math.round(prev / 12)));
+                    }
+                  }}
+                  className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${
+                    tenureUnit === 'years'
+                      ? 'bg-white text-slate-900 shadow-sm'
+                      : 'text-slate-500 hover:text-slate-900'
+                  }`}
+                >
+                  Years
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (tenureUnit !== 'months') {
+                      setTenureUnit('months');
+                      setTenure(prev => prev * 12);
+                    }
+                  }}
+                  className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${
+                    tenureUnit === 'months'
+                      ? 'bg-white text-slate-900 shadow-sm'
+                      : 'text-slate-500 hover:text-slate-900'
+                  }`}
+                >
+                  Months
+                </button>
+              </div>
+            </div>
             <Input 
               id="tenure" 
               type="number" 
               value={tenure} 
               onChange={(e) => setTenure(Number(e.target.value))} 
               className="text-lg"
+              min={1}
             />
           </div>
           
