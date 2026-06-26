@@ -161,6 +161,15 @@ export const TESTIMONIALS = [
 
 export const VERIFIED_SANCTIONS = [
   {
+    name: 'Krishnendu Kundu',
+    date: '24-06-2026',
+    amount: 2200000,
+    charges: 0,
+    other: 0,
+    type: 'PL',
+    bank: 'BOI'
+  },
+  {
     name: 'Soumyajit Ghosh',
     date: '02-06-2026',
     amount: 1887000,
