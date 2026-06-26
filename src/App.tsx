@@ -925,6 +925,41 @@ export default function App() {
       {/* Footer */}
       <footer className="bg-slate-900 py-20 text-slate-400 border-t border-white/5">
         <div className="container mx-auto px-6">
+          {/* About Us & Team Section */}
+          <div className="mb-16">
+            <div className="max-w-3xl mb-8">
+              <h5 className="font-bold text-white text-sm uppercase tracking-widest mb-3">About Us</h5>
+              <p className="text-sm text-slate-400 leading-relaxed">
+                SimplyFunds is a trusted premier financial service consultancy dedicated to making funding transparent, quick, and hassle-free. Led by experienced industry professionals, we strive to secure the best loan terms for all your individual and corporate financial needs.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-slate-800/30 p-6 rounded-xl border border-white/5 hover:border-amber-500/20 transition-all duration-300">
+                <h6 className="font-bold text-white text-base">Rohit Roy Chowdhury</h6>
+                <p className="text-amber-500 text-xs font-semibold uppercase tracking-wider mt-1">Senior Consultant</p>
+                <p className="text-slate-400 text-xs mt-3 leading-relaxed">
+                  Passionate adviser specialized in simplifying high-value funding, tailoring debt consolidation programs, and organizing seamless processing with partner banks.
+                </p>
+              </div>
+              <div className="bg-slate-800/30 p-6 rounded-xl border border-white/5 hover:border-amber-500/20 transition-all duration-300">
+                <h6 className="font-bold text-white text-base">Amrita Adhikary</h6>
+                <p className="text-amber-500 text-xs font-semibold uppercase tracking-wider mt-1">Strategist</p>
+                <p className="text-slate-400 text-xs mt-3 leading-relaxed">
+                  Formulates optimal loan acquisition plans, interest rate optimization strategies, and fosters high-trust relationships with premium financial institutions.
+                </p>
+              </div>
+              <div className="bg-slate-800/30 p-6 rounded-xl border border-white/5 hover:border-amber-500/20 transition-all duration-300">
+                <h6 className="font-bold text-white text-base">Sayan Roy Chowdhury</h6>
+                <p className="text-amber-500 text-xs font-semibold uppercase tracking-wider mt-1">Marketing Officer</p>
+                <p className="text-slate-400 text-xs mt-3 leading-relaxed">
+                  Steers our customer outreach, financial literacy drives, and ensures simplified resources are available to individuals seeking hassle-free financing.
+                </p>
+              </div>
+            </div>
+            <Separator className="mt-16 bg-white/5" />
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
             <div className="space-y-6 col-span-1 md:col-span-1">
                <Logo light />
