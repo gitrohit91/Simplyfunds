@@ -701,11 +701,13 @@ export default function App() {
                   <div className="flex gap-4 self-center md:self-auto">
                     <div className="bg-amber-50 border border-amber-200/50 rounded-xl px-4 py-2 text-center">
                       <span className="text-[10px] uppercase font-bold text-amber-700 tracking-wider block">Capital Sourced</span>
-                      <span className="font-extrabold text-slate-900 text-sm">₹1.53 Crores</span>
+                      <span className="font-extrabold text-slate-900 text-sm">
+                        ₹{(VERIFIED_SANCTIONS.reduce((acc, s) => acc + s.amount, 0) / 10000000).toFixed(2)} Crores
+                      </span>
                     </div>
                     <div className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-center">
                       <span className="text-[10px] uppercase font-bold text-slate-500 tracking-wider block">Verified Entries</span>
-                      <span className="font-extrabold text-slate-900 text-sm">7 Records</span>
+                      <span className="font-extrabold text-slate-900 text-sm">{VERIFIED_SANCTIONS.length} Records</span>
                     </div>
                   </div>
                 </div>
@@ -723,11 +725,16 @@ export default function App() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-50 text-sm">
-                      {VERIFIED_SANCTIONS.filter(s => 
-                        s.name.toLowerCase().includes(sanctionsSearch.toLowerCase()) ||
-                        s.type.toLowerCase().includes(sanctionsSearch.toLowerCase()) ||
-                        (s.bank && s.bank.toLowerCase().includes(sanctionsSearch.toLowerCase()))
-                      ).map((item, idx) => (
+                      {VERIFIED_SANCTIONS.filter(s => {
+                        const search = sanctionsSearch.toLowerCase();
+                        const typeLabel = s.type === 'PL' ? 'personal loan pl' : s.type === 'HBL' ? 'home loan takeover and topup hbl' : 'home loan hl';
+                        return (
+                          s.name.toLowerCase().includes(search) ||
+                          s.type.toLowerCase().includes(search) ||
+                          typeLabel.includes(search) ||
+                          (s.bank && s.bank.toLowerCase().includes(search))
+                        );
+                      }).map((item, idx) => (
                         <tr key={idx} className="hover:bg-slate-50/50 transition-colors">
                           <td className="py-4 px-6 font-bold text-slate-900 flex items-center gap-2">
                             <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
@@ -744,18 +751,25 @@ export default function App() {
                             <Badge className={`${
                               item.type === 'PL' 
                                 ? 'bg-indigo-50 text-indigo-700 hover:bg-indigo-50 border-indigo-100' 
+                                : item.type === 'HBL'
+                                ? 'bg-teal-50 text-teal-700 hover:bg-teal-50 border-teal-100'
                                 : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-50 border-emerald-100'
                             } border text-[10px] font-bold py-0.5 px-2`}>
-                              {item.type === 'PL' ? 'Personal Loan (PL)' : 'Home Loan (HL)'}
+                              {item.type === 'PL' ? 'Personal Loan (PL)' : item.type === 'HBL' ? 'Home Loan Takeover and Topup' : 'Home Loan (HL)'}
                             </Badge>
                           </td>
                         </tr>
                       ))}
-                      {VERIFIED_SANCTIONS.filter(s => 
-                        s.name.toLowerCase().includes(sanctionsSearch.toLowerCase()) ||
-                        s.type.toLowerCase().includes(sanctionsSearch.toLowerCase()) ||
-                        (s.bank && s.bank.toLowerCase().includes(sanctionsSearch.toLowerCase()))
-                      ).length === 0 && (
+                      {VERIFIED_SANCTIONS.filter(s => {
+                        const search = sanctionsSearch.toLowerCase();
+                        const typeLabel = s.type === 'PL' ? 'personal loan pl' : s.type === 'HBL' ? 'home loan takeover and topup hbl' : 'home loan hl';
+                        return (
+                          s.name.toLowerCase().includes(search) ||
+                          s.type.toLowerCase().includes(search) ||
+                          typeLabel.includes(search) ||
+                          (s.bank && s.bank.toLowerCase().includes(search))
+                        );
+                      }).length === 0 && (
                         <tr>
                           <td colSpan={5} className="py-12 text-center text-slate-400">
                             No verified entries matching "{sanctionsSearch}" found.
