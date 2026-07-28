@@ -216,6 +216,15 @@ export const VERIFIED_SANCTIONS = [
   },
   {
     name: 'Anushree Biswas Dutt',
+    date: '29-03-2026',
+    amount: 2507000,
+    charges: 0,
+    other: 0,
+    type: 'HBL',
+    bank: 'BOI'
+  },
+  {
+    name: 'Anushree Biswas Dutt',
     date: '08-05-2026',
     amount: 500000,
     charges: 60000,
