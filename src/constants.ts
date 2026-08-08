@@ -156,6 +156,12 @@ export const TESTIMONIALS = [
     role: 'CESC Employee',
     content: 'Securing my BOB Personal Loan through SimplyFunds was incredibly smooth. They managed an amazing sanctioned amount of ₹18.87 Lakhs with complete transparency and guided me through every documentation stage.',
     rating: 5
+  },
+  {
+    name: 'Rahul Bose',
+    role: 'IDFC FIRST Bank Employee',
+    content: 'Switching my Home Loan from Bajaj Housing Finance to Bank of India with a top-up through SimplyFunds was completely seamless. They handled the entire takeover process, secured an unbelievable interest rate, and kept everything transparent with zero unexpected charges!',
+    rating: 5
   }
 ];
 
@@ -257,6 +263,15 @@ export const VERIFIED_SANCTIONS = [
     charges: 448800,
     other: 17792,
     type: 'HL',
+    bank: 'BOI'
+  },
+  {
+    name: 'Pritam Ghosh',
+    date: '23-07-2026',
+    amount: 1130000,
+    charges: 0,
+    other: 0,
+    type: 'PL',
     bank: 'BOI'
   }
 ];
