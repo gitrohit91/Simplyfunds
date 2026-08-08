@@ -176,6 +176,15 @@ export const VERIFIED_SANCTIONS = [
     bank: 'BOI'
   },
   {
+    name: 'Pritam Ghosh',
+    date: '23-07-2026',
+    amount: 1130000,
+    charges: 0,
+    other: 0,
+    type: 'PL',
+    bank: 'BOI'
+  },
+  {
     name: 'Krishnendu Kundu',
     date: '24-06-2026',
     amount: 2200000,
@@ -263,15 +272,6 @@ export const VERIFIED_SANCTIONS = [
     charges: 448800,
     other: 17792,
     type: 'HL',
-    bank: 'BOI'
-  },
-  {
-    name: 'Pritam Ghosh',
-    date: '23-07-2026',
-    amount: 1130000,
-    charges: 0,
-    other: 0,
-    type: 'PL',
     bank: 'BOI'
   }
 ];
