@@ -48,6 +48,7 @@ import { toast } from 'sonner';
 
 import EMICalculator from './components/EMICalculator';
 import EligibilityCalculator from './components/EligibilityCalculator';
+import ForeclosureCalculator from './components/ForeclosureCalculator';
 import LeadForm from './components/LeadForm';
 import Logo from './components/Logo';
 import PrivacyPolicy from './components/PrivacyPolicy';
@@ -77,9 +78,9 @@ export default function App() {
   const [activeCalculatorTab, setActiveCalculatorTab] = useState('eligibility');
   const [sanctionsSearch, setSanctionsSearch] = useState('');
 
-  const handleTabChangeAndScroll = (tabValue: 'eligibility' | 'emi') => {
+  const handleTabChangeAndScroll = (tabValue: 'eligibility' | 'emi' | 'foreclosure') => {
     setActiveCalculatorTab(tabValue);
-    const element = document.getElementById('emi-calculator');
+    const element = document.getElementById('emi-calculator') || document.getElementById('foreclosure-calculator');
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
@@ -450,6 +451,7 @@ export default function App() {
                   <TabsList className="bg-slate-100 p-1 border border-slate-200">
                     <TabsTrigger value="eligibility" className="data-[state=active]:bg-amber-500 data-[state=active]:text-white text-slate-600">Eligibility Tool</TabsTrigger>
                     <TabsTrigger value="emi" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white text-slate-600">EMI Calculator</TabsTrigger>
+                    <TabsTrigger value="foreclosure" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white text-slate-600">Foreclosure Calculator</TabsTrigger>
                   </TabsList>
                 </div>
                 <TabsContent value="eligibility">
@@ -460,6 +462,11 @@ export default function App() {
                 <TabsContent value="emi">
                   <div className="bg-slate-50 rounded-3xl p-1 border border-slate-100">
                     <EMICalculator />
+                  </div>
+                </TabsContent>
+                <TabsContent value="foreclosure">
+                  <div className="bg-slate-50 rounded-3xl p-1 border border-slate-100">
+                    <ForeclosureCalculator />
                   </div>
                 </TabsContent>
               </Tabs>
@@ -1008,6 +1015,12 @@ export default function App() {
                   className="hover:text-white transition-colors text-left cursor-pointer bg-transparent border-none p-0 text-slate-400"
                 >
                   EMI Calculator
+                </button>
+                <button 
+                  onClick={() => handleTabChangeAndScroll('foreclosure')} 
+                  className="hover:text-white transition-colors text-left cursor-pointer bg-transparent border-none p-0 text-slate-400"
+                >
+                  Foreclosure Calculator
                 </button>
                 <button 
                   onClick={() => handleTabChangeAndScroll('eligibility')} 
