@@ -451,7 +451,7 @@ export default function App() {
                   <TabsList className="bg-slate-100 p-1 border border-slate-200">
                     <TabsTrigger value="eligibility" className="data-[state=active]:bg-amber-500 data-[state=active]:text-white text-slate-600">Eligibility Tool</TabsTrigger>
                     <TabsTrigger value="emi" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white text-slate-600">EMI Calculator</TabsTrigger>
-                    <TabsTrigger value="foreclosure" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white text-slate-600">Foreclosure Calculator</TabsTrigger>
+                    <TabsTrigger value="foreclosure" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white text-slate-600">Loan Foreclosure Calculator</TabsTrigger>
                   </TabsList>
                 </div>
                 <TabsContent value="eligibility">
@@ -690,7 +690,12 @@ export default function App() {
             </TabsContent>
 
             <TabsContent value="ledger">
-              <div className="bg-white rounded-2xl border border-slate-100 shadow-lg overflow-hidden p-6 md:p-8 space-y-6">
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className="bg-white rounded-2xl border border-slate-100 shadow-lg overflow-hidden p-6 md:p-8 space-y-6"
+              >
                 
                 {/* Search and Summary Blocks */}
                 <div className="flex flex-col md:flex-row gap-6 justify-between items-stretch md:items-center">
@@ -742,7 +747,17 @@ export default function App() {
                           (s.bank && s.bank.toLowerCase().includes(search))
                         );
                       }).map((item, idx) => (
-                        <tr key={idx} className="hover:bg-slate-50/50 transition-colors">
+                        <motion.tr 
+                          key={`${item.name}-${item.date}-${idx}`}
+                          initial={{ opacity: 0, y: 15 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ 
+                            duration: 0.35, 
+                            delay: idx * 0.05,
+                            ease: [0.215, 0.61, 0.355, 1] 
+                          }}
+                          className="hover:bg-slate-50/50 transition-colors"
+                        >
                           <td className="py-4 px-6 font-bold text-slate-900 flex items-center gap-2">
                             <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                             {item.name}
@@ -765,7 +780,7 @@ export default function App() {
                               {item.type === 'PL' ? 'Personal Loan (PL)' : item.type === 'HBL' ? 'Home Loan Takeover and Topup' : 'Home Loan (HL)'}
                             </Badge>
                           </td>
-                        </tr>
+                        </motion.tr>
                       ))}
                       {VERIFIED_SANCTIONS.filter(s => {
                         const search = sanctionsSearch.toLowerCase();
@@ -777,11 +792,15 @@ export default function App() {
                           (s.bank && s.bank.toLowerCase().includes(search))
                         );
                       }).length === 0 && (
-                        <tr>
+                        <motion.tr
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ duration: 0.2 }}
+                        >
                           <td colSpan={5} className="py-12 text-center text-slate-400">
                             No verified entries matching "{sanctionsSearch}" found.
                           </td>
-                        </tr>
+                        </motion.tr>
                       )}
                     </tbody>
                   </table>
@@ -794,7 +813,7 @@ export default function App() {
                   </span>
                 </div>
 
-              </div>
+              </motion.div>
             </TabsContent>
           </Tabs>
         </div>
@@ -1020,7 +1039,7 @@ export default function App() {
                   onClick={() => handleTabChangeAndScroll('foreclosure')} 
                   className="hover:text-white transition-colors text-left cursor-pointer bg-transparent border-none p-0 text-slate-400"
                 >
-                  Foreclosure Calculator
+                  Loan Foreclosure Calculator
                 </button>
                 <button 
                   onClick={() => handleTabChangeAndScroll('eligibility')} 

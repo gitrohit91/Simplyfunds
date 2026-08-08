@@ -64,7 +64,7 @@ export default function ForeclosureCalculator() {
           <div>
             <CardTitle className="text-2xl font-bold text-slate-800 flex items-center gap-2">
               <Calculator className="w-6 h-6 text-purple-600" />
-              Foreclosure Settlement Calculator
+              Loan Foreclosure Calculator
             </CardTitle>
             <p className="text-xs text-slate-500 mt-1">
               Calculate exact loan closure amount, daily accrued interest, and applicable foreclosure charges.
