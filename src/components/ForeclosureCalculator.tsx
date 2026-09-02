@@ -58,30 +58,30 @@ export default function ForeclosureCalculator() {
   };
 
   return (
-    <Card id="foreclosure-calculator" className="w-full max-w-4xl mx-auto shadow-lg border-t-4 border-t-purple-600">
-      <CardHeader className="pb-4">
+    <Card id="foreclosure-calculator" className="w-full max-w-4xl mx-auto shadow-lg border-t-4 border-t-purple-600 overflow-hidden">
+      <CardHeader className="p-4 sm:p-6 pb-2 sm:pb-4 border-b border-slate-100">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
-            <CardTitle className="text-2xl font-bold text-slate-800 flex items-center gap-2">
-              <Calculator className="w-6 h-6 text-purple-600" />
+            <CardTitle className="text-xl sm:text-2xl font-bold text-slate-800 flex items-center gap-2">
+              <Calculator className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600" />
               Loan Foreclosure Calculator
             </CardTitle>
             <p className="text-xs text-slate-500 mt-1">
               Calculate exact loan closure amount, daily accrued interest, and applicable foreclosure charges.
             </p>
           </div>
-          <Badge variant="outline" className="w-fit bg-purple-50 text-purple-700 border-purple-200 text-xs font-semibold px-3 py-1">
+          <Badge variant="outline" className="w-fit bg-purple-50 text-purple-700 border-purple-200 text-xs font-semibold px-2.5 py-0.5">
             Real-time Accrual Engine
           </Badge>
         </div>
       </CardHeader>
 
-      <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-2">
+      <CardContent className="p-4 sm:p-6 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
         {/* Left Column: Form Inputs */}
-        <div className="space-y-5">
+        <div className="lg:col-span-7 space-y-5">
           {/* Outstanding Principal */}
           <div className="space-y-1.5">
-            <Label htmlFor="principal" className="text-xs font-semibold text-slate-700 flex items-center gap-1">
+            <Label htmlFor="principal" className="text-xs sm:text-sm font-semibold text-slate-700 flex items-center gap-1">
               <IndianRupee className="w-3.5 h-3.5 text-slate-500" />
               Outstanding Principal Balance (₹)
             </Label>
@@ -91,7 +91,7 @@ export default function ForeclosureCalculator() {
               value={principal || ''}
               onChange={(e) => setPrincipal(Number(e.target.value))}
               placeholder="e.g. 1000000"
-              className="text-base font-semibold"
+              className="text-base sm:text-lg font-semibold h-11"
               min={0}
             />
             <span className="text-[11px] text-slate-400">
@@ -195,18 +195,18 @@ export default function ForeclosureCalculator() {
         </div>
 
         {/* Right Column: Results & Chart */}
-        <div className="flex flex-col justify-between space-y-6">
-          <div className="bg-slate-900 text-white rounded-2xl p-5 shadow-inner space-y-4">
+        <div className="lg:col-span-5 flex flex-col justify-between space-y-5">
+          <div className="bg-slate-900 text-white rounded-2xl p-5 sm:p-6 shadow-inner space-y-4">
             <div>
               <span className="text-[11px] font-bold uppercase tracking-wider text-purple-300 block mb-1">
                 Total Foreclosure Payable
               </span>
-              <div className="text-3xl font-extrabold text-white tracking-tight">
+              <div className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight break-words">
                 ₹{results.totalPayable.toLocaleString('en-IN')}
               </div>
             </div>
 
-            <div className="border-t border-slate-800 pt-3 space-y-2 text-xs">
+            <div className="border-t border-slate-800 pt-3 space-y-2.5 text-xs sm:text-sm">
               <div className="flex justify-between text-slate-300">
                 <span>Outstanding Principal</span>
                 <span className="font-semibold text-white">₹{Number(principal || 0).toLocaleString('en-IN')}</span>
@@ -226,8 +226,8 @@ export default function ForeclosureCalculator() {
           </div>
 
           {/* Pie Chart Representation */}
-          <div className="bg-slate-50 border border-slate-200/60 rounded-xl p-3 flex flex-col items-center">
-            <div className="h-[180px] w-full">
+          <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-3 sm:p-4 flex flex-col items-center min-w-0 w-full">
+            <div className="h-[180px] sm:h-[200px] w-full min-w-0">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
@@ -235,7 +235,7 @@ export default function ForeclosureCalculator() {
                     cx="50%"
                     cy="50%"
                     innerRadius={45}
-                    outerRadius={75}
+                    outerRadius={70}
                     paddingAngle={4}
                     dataKey="value"
                   >
@@ -251,8 +251,8 @@ export default function ForeclosureCalculator() {
           </div>
 
           {/* Info Banner */}
-          <div className="flex items-start gap-2 text-[11px] text-slate-500 bg-slate-100/80 p-2.5 rounded-lg border border-slate-200/50">
-            <Info className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
+          <div className="flex items-start gap-2 text-[11px] text-slate-500 bg-slate-100/80 p-3 rounded-xl border border-slate-200/50">
+            <Info className="w-4 h-4 text-purple-600 shrink-0 mt-0.5" />
             <span>
               Note: Floating rate home loans to individual borrowers from RBI-regulated banks generally feature <strong>0% foreclosure charges</strong>. Commercial or fixed-rate loans may carry 2-4% charges.
             </span>
