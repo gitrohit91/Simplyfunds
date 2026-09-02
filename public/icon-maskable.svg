@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <radialGradient id="bgGlowMask" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#090d16"/>
+    </radialGradient>
+    <linearGradient id="goldGradM" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <linearGradient id="blueGradM" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60a5fa"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+    <linearGradient id="redGradM" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f87171"/>
+      <stop offset="100%" stop-color="#dc2626"/>
+    </linearGradient>
+    <linearGradient id="purpleGradM" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e879f9"/>
+      <stop offset="100%" stop-color="#c026d3"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Full-bleed background for Android maskable icon cropping -->
+  <rect width="512" height="512" fill="url(#bgGlowMask)"/>
+
+  <!-- Scaled inside 80% safe zone to ensure no clipping in circles or rounded squares -->
+  <g transform="translate(256, 230) scale(0.72) translate(-256, -230)">
+    <!-- Top golden facet -->
+    <polygon points="256,105 385,178 256,252 127,178" fill="url(#goldGradM)"/>
+    
+    <!-- Left blue facet -->
+    <polygon points="127,178 256,252 256,380 127,306" fill="url(#blueGradM)"/>
+    
+    <!-- Right red facet -->
+    <polygon points="256,252 385,178 385,306 256,380" fill="url(#redGradM)"/>
+
+    <!-- Accent lower magenta polygon -->
+    <polygon points="256,306 385,232 385,306 256,380" fill="url(#purpleGradM)" opacity="0.85"/>
+
+    <!-- Central Diamond Core highlight -->
+    <polygon points="256,252 315,217 256,182 197,217" fill="#fef08a" opacity="0.9"/>
+  </g>
+
+  <!-- Brand text inside safe area -->
+  <text x="256" y="420" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="28" letter-spacing="4" fill="#ffffff">SIMPLY FUNDS</text>
+  <text x="256" y="446" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="700" font-size="14" letter-spacing="2" fill="#fbbf24">DSA MOBILE</text>
+</svg>
