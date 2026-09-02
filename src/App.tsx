@@ -156,67 +156,71 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 overflow-x-hidden pt-10 sm:pt-11">
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 overflow-x-hidden">
       <Toaster position="top-center" />
       
-      {/* Top Android / Mobile App Download Banner */}
-      <div className="fixed top-0 left-0 right-0 z-50">
+      {/* Sticky Header with Integrated Android App Banner & Navigation */}
+      <header className="sticky top-0 z-50 w-full transition-all duration-300">
         <AndroidInstallBanner />
-      </div>
+        
+        {/* Navbar */}
+        <nav className={`w-full transition-all duration-300 ${
+          scrolled 
+            ? 'bg-white/95 backdrop-blur-md shadow-md py-3 border-b border-slate-200/80' 
+            : 'bg-white/90 backdrop-blur-md border-b border-slate-200/60 py-4'
+        }`}>
+          <div className="container mx-auto px-6 flex justify-between items-center">
+            <Logo />
+
+            <div className="hidden md:flex items-center gap-8 text-sm font-medium">
+              <a href="#" className="hover:text-blue-600 transition-colors">Home</a>
+              <a href="#loan-types" className="hover:text-blue-600 transition-colors">Loan Types</a>
+              <a href="#partners" className="hover:text-blue-600 transition-colors">Partners</a>
+              <a href="#emi-calculator" className="hover:text-blue-600 transition-colors">Calculators</a>
+              <a href="#document-checklist" className="hover:text-blue-600 transition-colors">Documents</a>
+              
+              <LeadForm user={user} />
+            </div>
+
+            <button className="md:hidden p-2 text-slate-700 hover:text-slate-900 transition-colors" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+              {isMenuOpen ? <X /> : <Menu />}
+            </button>
+          </div>
+
+          {/* Mobile Menu */}
+          <AnimatePresence>
+            {isMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="md:hidden bg-white border-b border-slate-100 overflow-hidden shadow-xl"
+              >
+                <div className="container mx-auto px-6 py-6 flex flex-col gap-4">
+                  <div className="pb-4 border-b border-slate-100">
+                    <Logo />
+                  </div>
+                  <a href="#" className="text-lg font-medium py-2 border-b border-slate-50" onClick={() => setIsMenuOpen(false)}>Home</a>
+                  <a href="#loan-types" className="text-lg font-medium py-2 border-b border-slate-50" onClick={() => setIsMenuOpen(false)}>Loan Types</a>
+                  <a href="#partners" className="text-lg font-medium py-2 border-b border-slate-50" onClick={() => setIsMenuOpen(false)}>Partners</a>
+                  <a href="#emi-calculator" className="text-lg font-medium py-2 border-b border-slate-50" onClick={() => setIsMenuOpen(false)}>Calculators</a>
+                  <a href="#document-checklist" className="text-lg font-medium py-2 border-b border-slate-50" onClick={() => setIsMenuOpen(false)}>Documents</a>
+                  
+                  <div className="pt-4 flex flex-col gap-4">
+                    <LeadForm user={user} />
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </nav>
+      </header>
 
       {/* Offline Status Toast */}
       <OfflineIndicator />
-      
-      {/* Navbar */}
-      <nav className={`fixed top-10 sm:top-11 w-full z-40 transition-all duration-300 ${scrolled ? 'bg-white/80 backdrop-blur-md shadow-sm py-3' : 'bg-transparent py-5'}`}>
-        <div className="container mx-auto px-6 flex justify-between items-center">
-          <Logo />
-
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium">
-            <a href="#" className="hover:text-blue-600 transition-colors">Home</a>
-            <a href="#loan-types" className="hover:text-blue-600 transition-colors">Loan Types</a>
-            <a href="#partners" className="hover:text-blue-600 transition-colors">Partners</a>
-            <a href="#emi-calculator" className="hover:text-blue-600 transition-colors">Calculators</a>
-            <a href="#document-checklist" className="hover:text-blue-600 transition-colors">Documents</a>
-            
-            <LeadForm user={user} />
-          </div>
-
-          <button className="md:hidden p-2" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            {isMenuOpen ? <X /> : <Menu />}
-          </button>
-        </div>
-
-        {/* Mobile Menu */}
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="md:hidden bg-white border-b border-slate-100 overflow-hidden"
-            >
-              <div className="container mx-auto px-6 py-6 flex flex-col gap-4">
-                <div className="pb-4 border-b border-slate-100">
-                  <Logo />
-                </div>
-                <a href="#" className="text-lg font-medium py-2 border-b border-slate-50" onClick={() => setIsMenuOpen(false)}>Home</a>
-                <a href="#loan-types" className="text-lg font-medium py-2 border-b border-slate-50" onClick={() => setIsMenuOpen(false)}>Loan Types</a>
-                <a href="#partners" className="text-lg font-medium py-2 border-b border-slate-50" onClick={() => setIsMenuOpen(false)}>Partners</a>
-                <a href="#emi-calculator" className="text-lg font-medium py-2 border-b border-slate-50" onClick={() => setIsMenuOpen(false)}>Calculators</a>
-                <a href="#document-checklist" className="text-lg font-medium py-2 border-b border-slate-50" onClick={() => setIsMenuOpen(false)}>Documents</a>
-                
-                <div className="pt-4 flex flex-col gap-4">
-                  <LeadForm user={user} />
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </nav>
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
+      <section className="relative pt-10 pb-16 md:pt-16 md:pb-28 overflow-hidden">
         <div className="absolute top-0 right-0 -z-10 w-[600px] h-[600px] bg-blue-100/50 rounded-full blur-3xl -mr-64 -mt-64"></div>
         <div className="absolute bottom-0 left-0 -z-10 w-[400px] h-[400px] bg-emerald-50/50 rounded-full blur-3xl -ml-32 -mb-32"></div>
 
