@@ -6,7 +6,9 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Info, Calculator, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Info, Calculator, ArrowRight, FileDown, CheckCircle2, User } from 'lucide-react';
+import { toast } from 'sonner';
+import { generateEligibilityReportPDF } from '../utils/pdfGenerator';
 
 const formatInWords = (num: number): string => {
   if (!num || num <= 0) return '';
@@ -32,6 +34,8 @@ export default function EligibilityCalculator() {
   const [tenureType, setTenureType] = useState<'years' | 'months'>('years');
   const [rate, setRate] = useState<number>(8.75);
   const [foir, setFoir] = useState<string>("60");
+  const [applicantName, setApplicantName] = useState<string>('');
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState<boolean>(false);
 
   const handleTenureTypeChange = (type: 'years' | 'months') => {
     if (type === tenureType) return;
@@ -67,6 +71,35 @@ export default function EligibilityCalculator() {
 
   const results = calculateEligibility();
 
+  const handleDownloadPDF = () => {
+    if (results.maxLoan <= 0) {
+      toast.error("Please enter a valid monthly income greater than your existing obligations.");
+      return;
+    }
+
+    try {
+      setIsGeneratingPDF(true);
+      generateEligibilityReportPDF({
+        grossIncome: income,
+        existingEmis: emis,
+        payslipDeductions: deductions,
+        tenure: tenure,
+        tenureType: tenureType,
+        expectedRate: rate,
+        foir: foir,
+        maxEligibleLoan: results.maxLoan,
+        maxAffordableEMI: results.maxEMI,
+        borrowerName: applicantName.trim() || undefined,
+      });
+      toast.success("Eligibility Report PDF generated & downloaded successfully!");
+    } catch (err) {
+      console.error("PDF generation error:", err);
+      toast.error("Failed to generate PDF. Please try again.");
+    } finally {
+      setIsGeneratingPDF(false);
+    }
+  };
+
   const scrollToContact = () => {
     const element = document.getElementById('contact');
     if (element) {
@@ -82,9 +115,22 @@ export default function EligibilityCalculator() {
             <Calculator className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500" />
             Loan Eligibility Tool
           </CardTitle>
-          <Badge variant="outline" className="w-fit bg-amber-50 text-amber-800 border-amber-200 text-xs px-2.5 py-0.5 font-medium">
-            Multi-Bank FOIR Engine
-          </Badge>
+          <div className="flex items-center gap-2">
+            <Badge variant="outline" className="w-fit bg-amber-50 text-amber-800 border-amber-200 text-xs px-2.5 py-0.5 font-medium">
+              Multi-Bank FOIR Engine
+            </Badge>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={handleDownloadPDF}
+              disabled={isGeneratingPDF || results.maxLoan <= 0}
+              className="text-xs h-7 px-2.5 bg-white border-amber-300 text-amber-900 hover:bg-amber-100 flex items-center gap-1.5 shadow-2xs font-semibold cursor-pointer"
+            >
+              <FileDown className="w-3.5 h-3.5 text-amber-700" />
+              <span>{isGeneratingPDF ? 'Generating...' : 'PDF Report'}</span>
+            </Button>
+          </div>
         </div>
         <p className="text-xs text-slate-500 mt-1">
           Estimate the maximum loan amount banks will sanction based on your monthly income and current liabilities.
@@ -94,6 +140,25 @@ export default function EligibilityCalculator() {
       <CardContent className="p-4 sm:p-6 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
         {/* Left Column: Form Inputs */}
         <div className="lg:col-span-7 space-y-5">
+          {/* Optional Applicant Name */}
+          <div className="space-y-1.5">
+            <Label htmlFor="applicant-name" className="text-xs font-semibold text-slate-600 flex items-center justify-between">
+              <span className="flex items-center gap-1">
+                <User className="w-3.5 h-3.5 text-amber-600" />
+                Applicant Name (Optional, for PDF Report)
+              </span>
+              <span className="text-[10px] text-slate-400 font-normal">Prints on certificate</span>
+            </Label>
+            <Input 
+              id="applicant-name" 
+              type="text" 
+              value={applicantName} 
+              onChange={(e) => setApplicantName(e.target.value)} 
+              className="text-sm h-10 border-slate-200 focus:border-amber-500 bg-white"
+              placeholder="e.g. Rohit Roy"
+            />
+          </div>
+
           {/* Monthly Gross Income */}
           <div className="space-y-1.5">
             <div className="flex justify-between items-center">
@@ -323,13 +388,26 @@ export default function EligibilityCalculator() {
               </p>
             </div>
 
-            <Button 
-              onClick={scrollToContact}
-              className="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold h-12 shadow-md shadow-amber-200 text-sm sm:text-base flex items-center justify-center gap-2 cursor-pointer mt-2"
-            >
-              Get Precise Bank Quote
-              <ArrowRight className="w-4 h-4" />
-            </Button>
+            <div className="space-y-2 pt-1">
+              <Button 
+                onClick={scrollToContact}
+                className="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold h-11 shadow-md shadow-amber-200 text-sm flex items-center justify-center gap-2 cursor-pointer"
+              >
+                Get Precise Bank Quote
+                <ArrowRight className="w-4 h-4" />
+              </Button>
+
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleDownloadPDF}
+                disabled={isGeneratingPDF || results.maxLoan <= 0}
+                className="w-full bg-white hover:bg-amber-100/70 border-amber-300 text-amber-900 font-semibold h-10 text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+              >
+                <FileDown className="w-4 h-4 text-amber-700" />
+                <span>{isGeneratingPDF ? 'Generating Official PDF...' : 'Download Eligibility Report (PDF)'}</span>
+              </Button>
+            </div>
           </div>
         </div>
       </CardContent>

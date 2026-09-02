@@ -5,7 +5,9 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
-import { Calculator, ArrowRight, IndianRupee, Percent, Calendar } from 'lucide-react';
+import { Calculator, ArrowRight, IndianRupee, Percent, Calendar, FileDown, User } from 'lucide-react';
+import { toast } from 'sonner';
+import { generateEMIReportPDF } from '../utils/pdfGenerator';
 
 const formatInWords = (num: number): string => {
   if (!num || num <= 0) return '';
@@ -28,6 +30,8 @@ export default function EMICalculator() {
   const [rate, setRate] = useState<number>(8.5);
   const [tenure, setTenure] = useState<number>(15); // years or months
   const [tenureUnit, setTenureUnit] = useState<'years' | 'months'>('years');
+  const [borrowerName, setBorrowerName] = useState<string>('');
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState<boolean>(false);
 
   const calculateEMI = () => {
     const p = Math.max(0, amount || 0);
@@ -60,6 +64,33 @@ export default function EMICalculator() {
 
   const results = calculateEMI();
 
+  const handleDownloadPDF = () => {
+    if (!amount || amount <= 0 || results.emi <= 0) {
+      toast.error("Please specify a valid loan principal amount.");
+      return;
+    }
+
+    try {
+      setIsGeneratingPDF(true);
+      generateEMIReportPDF({
+        loanAmount: amount,
+        interestRate: rate,
+        tenure: tenure,
+        tenureUnit: tenureUnit,
+        monthlyEMI: results.emi,
+        totalInterest: results.totalInterest,
+        totalPayment: results.totalPayment,
+        borrowerName: borrowerName.trim() || undefined,
+      });
+      toast.success("Loan Repayment & EMI Schedule PDF downloaded successfully!");
+    } catch (err) {
+      console.error("PDF generation error:", err);
+      toast.error("Failed to generate PDF. Please try again.");
+    } finally {
+      setIsGeneratingPDF(false);
+    }
+  };
+
   const data = [
     { name: 'Principal Amount', value: Math.max(0, amount || 0) },
     { name: 'Total Interest', value: Math.max(0, results.totalInterest || 0) },
@@ -82,9 +113,22 @@ export default function EMICalculator() {
             <Calculator className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
             EMI Calculator
           </CardTitle>
-          <Badge variant="outline" className="w-fit bg-blue-50 text-blue-700 border-blue-200 text-xs px-2.5 py-0.5 font-medium">
-            Accurate Amortization
-          </Badge>
+          <div className="flex items-center gap-2">
+            <Badge variant="outline" className="w-fit bg-blue-50 text-blue-700 border-blue-200 text-xs px-2.5 py-0.5 font-medium">
+              Accurate Amortization
+            </Badge>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={handleDownloadPDF}
+              disabled={isGeneratingPDF || !amount || amount <= 0}
+              className="text-xs h-7 px-2.5 bg-white border-blue-300 text-blue-900 hover:bg-blue-100 flex items-center gap-1.5 shadow-2xs font-semibold cursor-pointer"
+            >
+              <FileDown className="w-3.5 h-3.5 text-blue-700" />
+              <span>{isGeneratingPDF ? 'Generating...' : 'PDF Schedule'}</span>
+            </Button>
+          </div>
         </div>
         <p className="text-xs text-slate-500 mt-1">
           Calculate your monthly installment, overall interest burden, and total repayment schedule in real time.
@@ -94,6 +138,25 @@ export default function EMICalculator() {
       <CardContent className="p-4 sm:p-6 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
         {/* Left Column: Form Controls */}
         <div className="lg:col-span-7 space-y-5">
+          {/* Optional Applicant Name */}
+          <div className="space-y-1.5">
+            <Label htmlFor="borrower-name" className="text-xs font-semibold text-slate-600 flex items-center justify-between">
+              <span className="flex items-center gap-1">
+                <User className="w-3.5 h-3.5 text-blue-600" />
+                Applicant Name (Optional, for PDF Report)
+              </span>
+              <span className="text-[10px] text-slate-400 font-normal">Prints on schedule</span>
+            </Label>
+            <Input 
+              id="borrower-name" 
+              type="text" 
+              value={borrowerName} 
+              onChange={(e) => setBorrowerName(e.target.value)} 
+              className="text-sm h-10 border-slate-200 focus:border-blue-500 bg-white"
+              placeholder="e.g. Rohit Roy"
+            />
+          </div>
+
           {/* Loan Amount */}
           <div className="space-y-1.5">
             <div className="flex justify-between items-center">
@@ -318,13 +381,26 @@ export default function EMICalculator() {
             </p>
           </div>
 
-          <Button 
-            onClick={scrollToContact}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold h-12 shadow-md shadow-blue-200 text-sm sm:text-base flex items-center justify-center gap-2 cursor-pointer"
-          >
-            Apply with this EMI
-            <ArrowRight className="w-4 h-4" />
-          </Button>
+          <div className="space-y-2 pt-1">
+            <Button 
+              onClick={scrollToContact}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold h-11 shadow-md shadow-blue-200 text-sm flex items-center justify-center gap-2 cursor-pointer"
+            >
+              Apply with this EMI
+              <ArrowRight className="w-4 h-4" />
+            </Button>
+
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleDownloadPDF}
+              disabled={isGeneratingPDF || !amount || amount <= 0}
+              className="w-full bg-white hover:bg-blue-50 border-blue-300 text-blue-900 font-semibold h-10 text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+            >
+              <FileDown className="w-4 h-4 text-blue-700" />
+              <span>{isGeneratingPDF ? 'Generating Schedule PDF...' : 'Download Amortization & EMI Report (PDF)'}</span>
+            </Button>
+          </div>
         </div>
       </CardContent>
     </Card>

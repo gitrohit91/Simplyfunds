@@ -2,9 +2,12 @@ import { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
-import { Calculator, Info, Calendar, Percent, IndianRupee } from 'lucide-react';
+import { Calculator, Info, Calendar, Percent, IndianRupee, FileDown } from 'lucide-react';
+import { toast } from 'sonner';
+import { generateForeclosureReportPDF } from '../utils/pdfGenerator';
 
 export default function ForeclosureCalculator() {
   const [principal, setPrincipal] = useState<number>(1000000); // ₹10,00,000 default
@@ -13,6 +16,8 @@ export default function ForeclosureCalculator() {
   const [includeGst, setIncludeGst] = useState<boolean>(true);
   const [gstPct] = useState<number>(18); // 18% standard GST
   const [days, setDays] = useState<number>(15); // 15 days default
+  const [otherCharges, setOtherCharges] = useState<number>(0);
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState<boolean>(false);
 
   // Calculations
   const calculateForeclosure = () => {
@@ -20,6 +25,7 @@ export default function ForeclosureCalculator() {
     const rate = Math.max(0, roi || 0);
     const feePct = Math.max(0, foreclosureFeePct || 0);
     const numDays = Math.max(0, days || 0);
+    const other = Math.max(0, otherCharges || 0);
 
     // Per day interest = (Principal * (ROI / 100)) / 365
     const perDayInterest = (p * (rate / 100)) / 365;
@@ -31,7 +37,7 @@ export default function ForeclosureCalculator() {
     const totalFeeWithGst = feeAmount + gstAmount;
 
     // Total Foreclosure Settlement
-    const totalPayable = p + totalFeeWithGst + totalAccruedInterest;
+    const totalPayable = p + totalFeeWithGst + totalAccruedInterest + other;
 
     return {
       perDayInterest: Math.round(perDayInterest * 100) / 100, // round to 2 decimals
@@ -44,6 +50,36 @@ export default function ForeclosureCalculator() {
   };
 
   const results = calculateForeclosure();
+
+  const handleDownloadPDF = () => {
+    if (!principal || principal <= 0) {
+      toast.error("Please enter a valid outstanding principal balance.");
+      return;
+    }
+
+    try {
+      setIsGeneratingPDF(true);
+      generateForeclosureReportPDF({
+        outstandingPrincipal: principal,
+        interestRate: roi,
+        dailyInterest: results.perDayInterest,
+        daysPassed: days,
+        accruedInterest: results.totalAccruedInterest,
+        foreclosureFeePct: foreclosureFeePct,
+        foreclosureFee: results.feeAmount,
+        gstOnFee: results.gstAmount,
+        totalFeeWithGst: results.totalFeeWithGst,
+        otherCharges: otherCharges,
+        totalPayable: results.totalPayable,
+      });
+      toast.success("Foreclosure Settlement PDF Report downloaded successfully!");
+    } catch (err) {
+      console.error("PDF generation error:", err);
+      toast.error("Failed to generate PDF. Please try again.");
+    } finally {
+      setIsGeneratingPDF(false);
+    }
+  };
 
   const chartData = [
     { name: 'Outstanding Principal', value: Math.max(0, principal || 0) },
@@ -70,9 +106,22 @@ export default function ForeclosureCalculator() {
               Calculate exact loan closure amount, daily accrued interest, and applicable foreclosure charges.
             </p>
           </div>
-          <Badge variant="outline" className="w-fit bg-purple-50 text-purple-700 border-purple-200 text-xs font-semibold px-2.5 py-0.5">
-            Real-time Accrual Engine
-          </Badge>
+          <div className="flex items-center gap-2">
+            <Badge variant="outline" className="w-fit bg-purple-50 text-purple-700 border-purple-200 text-xs font-semibold px-2.5 py-0.5">
+              Real-time Accrual Engine
+            </Badge>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={handleDownloadPDF}
+              disabled={isGeneratingPDF || !principal || principal <= 0}
+              className="text-xs h-7 px-2.5 bg-white border-purple-300 text-purple-900 hover:bg-purple-100 flex items-center gap-1.5 shadow-2xs font-semibold cursor-pointer"
+            >
+              <FileDown className="w-3.5 h-3.5 text-purple-700" />
+              <span>{isGeneratingPDF ? 'Generating...' : 'PDF Report'}</span>
+            </Button>
+          </div>
         </div>
       </CardHeader>
 
@@ -257,6 +306,17 @@ export default function ForeclosureCalculator() {
               Note: Floating rate home loans to individual borrowers from RBI-regulated banks generally feature <strong>0% foreclosure charges</strong>. Commercial or fixed-rate loans may carry 2-4% charges.
             </span>
           </div>
+
+          <Button
+            type="button"
+            variant="outline"
+            onClick={handleDownloadPDF}
+            disabled={isGeneratingPDF || !principal || principal <= 0}
+            className="w-full bg-white hover:bg-purple-50 border-purple-300 text-purple-900 font-semibold h-10 text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+          >
+            <FileDown className="w-4 h-4 text-purple-700" />
+            <span>{isGeneratingPDF ? 'Generating Settlement PDF...' : 'Download Foreclosure Settlement Report (PDF)'}</span>
+          </Button>
         </div>
       </CardContent>
     </Card>
