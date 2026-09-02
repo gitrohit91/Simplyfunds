@@ -53,7 +53,6 @@ import LeadForm from './components/LeadForm';
 import Logo from './components/Logo';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import TermsOfService from './components/TermsOfService';
-import { AndroidInstallBanner } from './components/AndroidInstallBanner';
 import { OfflineIndicator } from './components/OfflineIndicator';
 import { LOAN_TYPES, TRUST_MARKERS, PARTNERS, TESTIMONIALS, VERIFIED_SANCTIONS, SPECIALIZATIONS } from './constants';
 import { getLoanAdvice } from './services/geminiService';
@@ -159,10 +158,8 @@ export default function App() {
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900 overflow-x-hidden">
       <Toaster position="top-center" />
       
-      {/* Sticky Header with Integrated Android App Banner & Navigation */}
+      {/* Sticky Header with Navigation */}
       <header className="sticky top-0 z-50 w-full transition-all duration-300">
-        <AndroidInstallBanner />
-        
         {/* Navbar */}
         <nav className={`w-full transition-all duration-300 ${
           scrolled 
