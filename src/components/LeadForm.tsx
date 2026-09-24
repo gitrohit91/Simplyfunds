@@ -177,7 +177,7 @@ export default function LeadForm({ user }: LeadFormProps) {
                         <SelectItem value="personal">Personal Loan</SelectItem>
                         <SelectItem value="business">Business Loan</SelectItem>
                         <SelectItem value="lap">Loan Against Property</SelectItem>
-                        <SelectItem value="gold">Gold Loan</SelectItem>
+                        <SelectItem value="gold">Gold Loan Takeover (Only 3% charges)</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>

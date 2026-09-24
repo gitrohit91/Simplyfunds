@@ -42,18 +42,18 @@ export const LOAN_TYPES = [
     title: 'Loan Against Property',
     description: 'Unlock the value of your property for your financial needs.',
     icon: Building2,
-    interestRate: '9 - 11%',
+    interestRate: '8.85% to 10%',
     maxTenure: '15 Years',
     documents: ['Property Documents', 'Identity Proof', 'Income Proof']
   },
   {
     id: 'gold',
-    title: 'Gold Loan',
-    description: 'Instant cash against your gold ornaments with minimal documentation.',
+    title: 'Gold Loan takeover with only 3% charges',
+    description: 'Transfer your existing gold loan seamlessly with only 3% takeover charges and lower interest rates.',
     icon: Coins,
-    interestRate: '9 - 14%',
-    maxTenure: '2 Years',
-    documents: ['Aadhaar Card', 'PAN Card', 'Gold Valuation Certificate']
+    interestRate: '8.75 to 9.10%',
+    maxTenure: '3 Years',
+    documents: ['Aadhaar Card', 'PAN Card', 'Existing Gold Loan Receipt / Pledge Card']
   }
 ];
 
@@ -167,6 +167,15 @@ export const TESTIMONIALS = [
 
 export const VERIFIED_SANCTIONS = [
   {
+    name: 'Kankan Mandal',
+    date: '15-09-2026',
+    amount: 1370000,
+    charges: 0,
+    other: 0,
+    type: 'PL',
+    bank: 'BOB'
+  },
+  {
     name: 'Soham Mondal',
     date: '05-09-2026',
     amount: 2000000,
@@ -179,6 +188,15 @@ export const VERIFIED_SANCTIONS = [
     name: 'Subrata Rudra',
     date: '18-08-2026',
     amount: 2000000,
+    charges: 0,
+    other: 0,
+    type: 'PL',
+    bank: 'BOB'
+  },
+  {
+    name: 'Rahul Bose',
+    date: '13-08-2026',
+    amount: 1320000,
     charges: 0,
     other: 0,
     type: 'PL',
