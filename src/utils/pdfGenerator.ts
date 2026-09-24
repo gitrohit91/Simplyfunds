@@ -409,6 +409,7 @@ export interface EligibilityReportParams {
   foir: string;
   maxEligibleLoan: number;
   maxAffordableEMI: number;
+  foirHeadroom?: number;
   borrowerName?: string;
   loanType?: string;
 }
@@ -454,14 +455,14 @@ export const generateEligibilityReportPDF = (params: EligibilityReportParams) =>
   doc.setTextColor(146, 64, 14);
   doc.text(`Estimated Sanction: approx. ${formatInWords(params.maxEligibleLoan)}`, 18, currentY + 22);
 
-  // Box 2: Max Affordable Monthly EMI
+  // Box 2: Monthly EMI for Eligible Loan
   doc.setFillColor(238, 242, 255); // Indigo-50
   doc.setDrawColor(99, 102, 241);
   doc.roundedRect(14 + bannerWidth + 6, currentY, bannerWidth, bannerHeight, 2, 2, 'FD');
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(8);
   doc.setTextColor(67, 56, 202);
-  doc.text('MAX AFFORDABLE MONTHLY EMI', 18 + bannerWidth + 6, currentY + 7);
+  doc.text('EXPECTED MONTHLY EMI', 18 + bannerWidth + 6, currentY + 7);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(14);
   doc.setTextColor(30, 27, 75);
@@ -469,7 +470,7 @@ export const generateEligibilityReportPDF = (params: EligibilityReportParams) =>
   doc.setFontSize(7.5);
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(100, 116, 139);
-  doc.text(`Derived after ${params.foir}% FOIR & existing deductions`, 18 + bannerWidth + 6, currentY + 22);
+  doc.text(`For ${formatINR(params.maxEligibleLoan)} @ ${params.expectedRate}% ROI (${params.tenure} ${params.tenureType})`, 18 + bannerWidth + 6, currentY + 22);
 
   currentY += bannerHeight + 8;
 
@@ -477,20 +478,23 @@ export const generateEligibilityReportPDF = (params: EligibilityReportParams) =>
   const netIncome = Math.max(0, params.grossIncome - params.payslipDeductions);
   const foirAmount = (params.grossIncome * Number(params.foir)) / 100;
 
+  const tableBody = [
+    ['Gross Monthly Income', formatINR(params.grossIncome), `Primary base income (${formatInWords(params.grossIncome)}/month)`],
+    ['Existing Monthly EMIs', formatINR(params.existingEmis), params.existingEmis > 0 ? 'Current active bank loan repayments' : 'Nil active loan obligations'],
+    ['Salary Deductions (PF / PTax)', formatINR(params.payslipDeductions), 'Statutory / office deductions on payslip'],
+    ['Net In-Hand / Take-Home', formatINR(netIncome), 'Estimated disposable monthly liquidity'],
+    ['Bank FOIR Norm Applied', `${params.foir}% of Gross Income`, params.foir === '60' ? `Allowable debt obligation budget: ${formatINR(foirAmount)}/mo (Max loan is 24 times of gross salary)` : `Allowable debt obligation budget: ${formatINR(foirAmount)}/mo`],
+    ['Expected Loan Monthly EMI', formatINR(params.maxAffordableEMI), `Actual monthly installment to service ${formatINR(params.maxEligibleLoan)} loan`],
+    ...(params.foirHeadroom ? [['Max Allowable FOIR Headroom', formatINR(params.foirHeadroom), `Allowable total debt ceiling under ${params.foir}% FOIR`]] : []),
+    ['Assumed Interest Rate (ROI)', `${params.expectedRate}% p.a.`, 'Benchmark floating interest rate'],
+    ['Proposed Tenure', `${params.tenure} ${params.tenureType}`, `${params.tenureType === 'years' ? params.tenure * 12 : params.tenure} Monthly installment cycles`],
+  ];
+
   autoTable(doc, {
     startY: currentY,
     theme: 'grid',
     head: [['Underwriting Parameter', 'Applicant Figure', 'Regulatory & Banking Impact']],
-    body: [
-      ['Gross Monthly Income', formatINR(params.grossIncome), `Primary base income (${formatInWords(params.grossIncome)}/month)`],
-      ['Existing Monthly EMIs', formatINR(params.existingEmis), params.existingEmis > 0 ? 'Current active bank loan repayments' : 'Nil active loan obligations'],
-      ['Salary Deductions (PF / PTax)', formatINR(params.payslipDeductions), 'Statutory / office deductions on payslip'],
-      ['Net In-Hand / Take-Home', formatINR(netIncome), 'Estimated disposable monthly liquidity'],
-      ['Bank FOIR Norm Applied', `${params.foir}% of Gross Income`, `Allowable debt obligation budget: ${formatINR(foirAmount)}/mo`],
-      ['Maximum Affordable Fresh EMI', formatINR(params.maxAffordableEMI), 'Residual EMI servicing headroom available'],
-      ['Assumed Interest Rate (ROI)', `${params.expectedRate}% p.a.`, 'Benchmark floating interest rate'],
-      ['Proposed Tenure', `${params.tenure} ${params.tenureType}`, `${params.tenureType === 'years' ? params.tenure * 12 : params.tenure} Monthly installment cycles`],
-    ],
+    body: tableBody,
     headStyles: {
       fillColor: [217, 119, 6], // Amber-600
       textColor: [255, 255, 255],

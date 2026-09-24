@@ -49,23 +49,37 @@ export default function EligibilityCalculator() {
 
   const calculateEligibility = () => {
     const foirMultiplier = Number(foir) / 100;
-    const maxEMI = (income * foirMultiplier) - emis - deductions;
+    const maxAllowableEMI = (income * foirMultiplier) - emis - deductions;
     const r = rate / 12 / 100;
     const n = tenureType === 'years' ? tenure * 12 : tenure;
     
-    if (maxEMI <= 0 || n <= 0 || r <= 0) {
+    if (maxAllowableEMI <= 0 || n <= 0 || r <= 0) {
       return {
-        maxEMI: Math.max(0, Math.round(maxEMI)),
-        maxLoan: 0
+        maxEMI: 0,
+        actualEMI: 0,
+        maxAllowableEMI: Math.max(0, Math.round(maxAllowableEMI)),
+        maxLoan: 0,
+        isCappedBySalary: false,
+        salaryCap: income * 24
       };
     }
 
     // Reverse EMI formula: P = (EMI * ( (1+r)^n - 1 )) / ( r * (1+r)^n )
-    const maxLoan = (maxEMI * (Math.pow(1 + r, n) - 1)) / (r * Math.pow(1 + r, n));
+    const calculatedLoan = (maxAllowableEMI * (Math.pow(1 + r, n) - 1)) / (r * Math.pow(1 + r, n));
+    const salaryCap = foir === "60" ? income * 24 : Infinity;
+    const isCappedBySalary = foir === "60" && calculatedLoan > salaryCap;
+    const finalLoan = Math.min(calculatedLoan, salaryCap);
+
+    // Exact monthly EMI required to repay the actual eligible loan amount (P = finalLoan)
+    const actualLoanEMI = (finalLoan * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
     
     return {
-      maxEMI: Math.max(0, Math.round(maxEMI)),
-      maxLoan: Math.max(0, Math.round(maxLoan))
+      actualEMI: Math.max(0, Math.round(actualLoanEMI)),
+      maxEMI: Math.max(0, Math.round(actualLoanEMI)),
+      maxAllowableEMI: Math.max(0, Math.round(maxAllowableEMI)),
+      maxLoan: Math.max(0, Math.round(finalLoan)),
+      isCappedBySalary,
+      salaryCap: income * 24
     };
   };
 
@@ -88,7 +102,8 @@ export default function EligibilityCalculator() {
         expectedRate: rate,
         foir: foir,
         maxEligibleLoan: results.maxLoan,
-        maxAffordableEMI: results.maxEMI,
+        maxAffordableEMI: results.actualEMI,
+        foirHeadroom: results.maxAllowableEMI,
         borrowerName: applicantName.trim() || undefined,
       });
       toast.success("Eligibility Report PDF generated & downloaded successfully!");
@@ -335,14 +350,16 @@ export default function EligibilityCalculator() {
               <SelectContent>
                 <SelectItem value="40">40% FOIR (Conservative / Entry Level)</SelectItem>
                 <SelectItem value="50">50% FOIR (Standard PSU Banks)</SelectItem>
-                <SelectItem value="60">60% FOIR (Private Banks & NBFCs - Recommended)</SelectItem>
+                <SelectItem value="60">60% FOIR (Max loan amount is 24 times of gross salary)</SelectItem>
                 <SelectItem value="65">65% FOIR (High Income Category)</SelectItem>
                 <SelectItem value="70">70% FOIR (Super Prime / HNI Category)</SelectItem>
                 <SelectItem value="75">75% FOIR (Maximum Exception Norm)</SelectItem>
               </SelectContent>
             </Select>
             <p className="text-[11px] text-slate-400 italic">
-              FOIR: Percentage of gross income lenders allow towards total loan repayments.
+              {foir === "60" 
+                ? "Under bank FOIR norm of 60%, max loan amount is 24 times of gross salary." 
+                : "FOIR: Percentage of gross income lenders allow towards total loan repayments."}
             </p>
           </div>
         </div>
@@ -356,25 +373,57 @@ export default function EligibilityCalculator() {
             <h3 className="text-3xl sm:text-4xl font-black text-amber-950 tracking-tight break-words pt-1">
               ₹{results.maxLoan.toLocaleString('en-IN')}
             </h3>
-            <p className="text-xs sm:text-sm font-bold text-amber-700">
-              {results.maxLoan > 0 ? `Approx. ${formatInWords(results.maxLoan)} Sanction Potential` : 'Please adjust income / liabilities'}
-            </p>
+            <div className="text-xs sm:text-sm font-bold text-amber-700">
+              {results.maxLoan > 0 ? (
+                <>
+                  <p>Approx. {formatInWords(results.maxLoan)} Sanction Potential</p>
+                  {results.isCappedBySalary && (
+                    <span className="inline-block bg-amber-200/80 text-amber-900 text-[11px] font-semibold px-2 py-0.5 rounded-md mt-1 border border-amber-300">
+                      Capped at 24× Gross Salary
+                    </span>
+                  )}
+                </>
+              ) : (
+                <p>Please adjust income / liabilities</p>
+              )}
+            </div>
           </div>
           
           <Separator className="bg-amber-200/80" />
           
           <div className="space-y-3.5">
             <div className="flex justify-between items-center text-xs sm:text-sm">
-              <span className="text-amber-900/80 font-medium">Max Affordable EMI</span>
+              <span className="text-amber-900/80 font-medium">Expected Monthly EMI</span>
               <span className="font-extrabold text-amber-950 text-base sm:text-lg">
-                ₹{results.maxEMI.toLocaleString('en-IN')} <span className="text-xs font-normal text-amber-800">/ mo</span>
+                ₹{results.actualEMI.toLocaleString('en-IN')} <span className="text-xs font-normal text-amber-800">/ mo</span>
               </span>
             </div>
+
+            {results.isCappedBySalary && (
+              <div className="flex justify-between items-center text-xs bg-white/70 px-2.5 py-1.5 rounded-lg border border-amber-200">
+                <span className="text-slate-600 font-medium">Max FOIR Debt Headroom</span>
+                <span className="font-semibold text-slate-700">
+                  ₹{results.maxAllowableEMI.toLocaleString('en-IN')}/mo
+                </span>
+              </div>
+            )}
 
             <div className="flex justify-between items-center text-xs sm:text-sm">
               <span className="text-amber-900/80 font-medium">Applicable FOIR Multiplier</span>
               <span className="font-bold text-amber-900">{foir}% of Income</span>
             </div>
+
+            {foir === "60" && (
+              <div className="flex justify-between items-center text-xs sm:text-sm bg-white/90 p-2.5 rounded-xl border border-amber-200 shadow-2xs">
+                <span className="text-amber-900 font-semibold flex items-center gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-amber-700 shrink-0" />
+                  Max Loan Cap (24x Salary)
+                </span>
+                <span className="font-extrabold text-amber-950">
+                  ₹{(income * 24).toLocaleString('en-IN')}
+                </span>
+              </div>
+            )}
 
             <div className="flex justify-between items-center text-xs sm:text-sm">
               <span className="text-amber-900/80 font-medium">Chosen Tenure</span>
