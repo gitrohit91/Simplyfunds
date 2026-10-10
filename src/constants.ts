@@ -167,6 +167,15 @@ export const TESTIMONIALS = [
 
 export const VERIFIED_SANCTIONS = [
   {
+    name: 'Azhar Uddin Gazi',
+    date: '06-10-2026',
+    amount: 1050000,
+    charges: 0,
+    other: 0,
+    type: 'PL',
+    bank: 'BOB'
+  },
+  {
     name: 'Kankan Mandal',
     date: '15-09-2026',
     amount: 1370000,
