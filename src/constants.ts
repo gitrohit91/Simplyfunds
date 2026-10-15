@@ -167,6 +167,24 @@ export const TESTIMONIALS = [
 
 export const VERIFIED_SANCTIONS = [
   {
+    name: 'Banani Guha Niyogi',
+    date: '15-10-2026',
+    amount: 1045000,
+    charges: 0,
+    other: 0,
+    type: 'PL',
+    bank: 'BOI'
+  },
+  {
+    name: 'Anushree Biswas Dutt',
+    date: '14-10-2026',
+    amount: 1100000,
+    charges: 0,
+    other: 0,
+    type: 'PL',
+    bank: 'BOB'
+  },
+  {
     name: 'Ayon Chakraborty',
     date: '12-10-2026',
     amount: 1400000,
