@@ -765,7 +765,13 @@ export default function App() {
                     <tbody className="divide-y divide-slate-50 text-sm">
                       {VERIFIED_SANCTIONS.filter(s => {
                         const search = sanctionsSearch.toLowerCase();
-                        const typeLabel = s.type === 'PL' ? 'personal loan pl' : s.type === 'HBL' ? 'home loan takeover and topup hbl' : 'home loan hl';
+                        const typeLabel = s.type === 'PL' 
+                          ? 'personal loan pl' 
+                          : s.type === 'HBL' 
+                          ? 'home loan takeover and topup hbl' 
+                          : s.type === 'AL'
+                          ? 'auto loan car loan al vehicle loan'
+                          : 'home loan hl';
                         return (
                           s.name.toLowerCase().includes(search) ||
                           s.type.toLowerCase().includes(search) ||
@@ -801,16 +807,30 @@ export default function App() {
                                 ? 'bg-indigo-50 text-indigo-700 hover:bg-indigo-50 border-indigo-100' 
                                 : item.type === 'HBL'
                                 ? 'bg-teal-50 text-teal-700 hover:bg-teal-50 border-teal-100'
+                                : item.type === 'AL'
+                                ? 'bg-violet-50 text-violet-700 hover:bg-violet-50 border-violet-100'
                                 : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-50 border-emerald-100'
                             } border text-[10px] font-bold py-0.5 px-2`}>
-                              {item.type === 'PL' ? 'Personal Loan (PL)' : item.type === 'HBL' ? 'Home Loan Takeover and Topup' : 'Home Loan (HL)'}
+                              {item.type === 'PL' 
+                                ? 'Personal Loan (PL)' 
+                                : item.type === 'HBL' 
+                                ? 'Home Loan Takeover and Topup' 
+                                : item.type === 'AL'
+                                ? 'Auto Loan (AL)'
+                                : 'Home Loan (HL)'}
                             </Badge>
                           </td>
                         </motion.tr>
                       ))}
                       {VERIFIED_SANCTIONS.filter(s => {
                         const search = sanctionsSearch.toLowerCase();
-                        const typeLabel = s.type === 'PL' ? 'personal loan pl' : s.type === 'HBL' ? 'home loan takeover and topup hbl' : 'home loan hl';
+                        const typeLabel = s.type === 'PL' 
+                          ? 'personal loan pl' 
+                          : s.type === 'HBL' 
+                          ? 'home loan takeover and topup hbl' 
+                          : s.type === 'AL'
+                          ? 'auto loan car loan al vehicle loan'
+                          : 'home loan hl';
                         return (
                           s.name.toLowerCase().includes(search) ||
                           s.type.toLowerCase().includes(search) ||

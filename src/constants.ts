@@ -167,6 +167,33 @@ export const TESTIMONIALS = [
 
 export const VERIFIED_SANCTIONS = [
   {
+    name: 'Debopam Tripathy',
+    date: '06-11-2026',
+    amount: 2000000,
+    charges: 0,
+    other: 0,
+    type: 'PL',
+    bank: 'BOB'
+  },
+  {
+    name: 'Chandan Mahto',
+    date: '06-11-2026',
+    amount: 704000,
+    charges: 0,
+    other: 0,
+    type: 'PL',
+    bank: 'BOB'
+  },
+  {
+    name: 'Debopam Tripathy',
+    date: '06-11-2026',
+    amount: 673000,
+    charges: 0,
+    other: 0,
+    type: 'AL',
+    bank: 'BOB'
+  },
+  {
     name: 'Banani Guha Niyogi',
     date: '15-10-2026',
     amount: 1045000,
